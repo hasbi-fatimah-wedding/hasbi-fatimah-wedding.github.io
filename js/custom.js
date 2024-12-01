@@ -1,26 +1,39 @@
 document.addEventListener("DOMContentLoaded", function() {
-    loadHTML('mainNav', 'sections/nav.html');
-    loadHTML('masthead', 'sections/masthead.html');
+    loadHTML('masthead', 'sections/masthead.html', function() {
+        // Lock scrolling on body, allow only masthead to scroll
+        document.body.style.overflow = 'hidden';
+        const header = document.getElementById('masthead');
+        header.style.overflowY = 'auto'; // Only masthead scrolls initially
+
+        // Ensure unlock button is present and add event listener
+        const unlockBtn = document.getElementById('unlock-btn');
+        unlockBtn.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default anchor jump
+            document.body.style.overflow = 'auto'; // Unlock scrolling globally
+            header.style.overflowY = ''; // Reset masthead scroll
+
+            // Smoothly scroll to the about section
+            document.querySelector('#about').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    // Load other sections
     loadHTML('about', 'sections/about.html');
     loadHTML('services', 'sections/services.html');
     loadHTML('portfolio', 'sections/portfolio.html');
     loadHTML('contact', 'sections/contact.html');
-
-    let param = get_param_url();
-    console.log(param);
 });
 
-// Function to load HTML partials
-function loadHTML(elementId, filePath) {
-fetch(filePath)
-    .then(response => {
-    if (!response.ok) throw new Error("Failed to load " + filePath);
-    return response.text();
-    })
-    .then(data => {
-    document.getElementById(elementId).innerHTML = data;
-    })
-    .catch(error => console.error(error));
+function loadHTML(id, url, callback) {
+    fetch(url)
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById(id).innerHTML = data;
+            if (callback) callback(); // Call callback after content loads
+        })
+        .catch(error => console.error('Error loading HTML:', error));
 }
 
 // get url param
