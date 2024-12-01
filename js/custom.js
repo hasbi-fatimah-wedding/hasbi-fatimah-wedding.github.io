@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
     window.onload = function() {
         window.scrollTo(0, 0);
     };
+
     const sectionsToLoad = [
         { id: 'masthead', url: 'sections/masthead.html', onLoad: setupMasthead },
         { id: 'about', url: 'sections/about.html' },
@@ -14,6 +15,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function setupMasthead() {
         lockScrollOnMasthead();
+        setInvitedName();
 
         const unlockBtn = document.getElementById('unlock-btn');
         if (unlockBtn) {
@@ -35,6 +37,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
         document.querySelector('#about').scrollIntoView({ behavior: 'smooth' });
     }
+
+    function setInvitedName() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const invited = urlParams.get('invited');
+        const partner = urlParams.get('partner');
+    
+        if (invited && partner) {
+            const capitalizedInvited = capitalizeFirstLetter(invited);
+            const capitalizedPartner = capitalizeFirstLetter(partner);
+            document.getElementById('invited').innerHTML = `<p class="text-white-75">${capitalizedInvited} & ${capitalizedPartner}</p>`;
+        }
+    }    
 });
 
 function loadHTML(id, url, callback) {
@@ -50,15 +64,7 @@ function loadHTML(id, url, callback) {
         .catch(error => console.error(`Error loading ${url}:`, error));
 }
 
-
-// get url param
-function get_param_url(){
-    const urlParams = new URLSearchParams(window.location.search);
-    const value = urlParams.get('id'); // Replace 'query' with the key you're looking for
-    
-    if (value) {
-        return value;
-    }
-    
-    return;
+function capitalizeFirstLetter(str) {
+    if (!str) return str; // Check if the string is empty
+    return str.charAt(0).toUpperCase() + str.slice(1);
 }
