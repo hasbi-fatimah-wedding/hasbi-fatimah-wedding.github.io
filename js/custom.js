@@ -1,40 +1,55 @@
 document.addEventListener("DOMContentLoaded", function() {
-    loadHTML('masthead', 'sections/masthead.html', function() {
-        // Lock scrolling on body, allow only masthead to scroll
+    window.onload = function() {
+        window.scrollTo(0, 0);
+    };
+    const sectionsToLoad = [
+        { id: 'masthead', url: 'sections/masthead.html', onLoad: setupMasthead },
+        { id: 'about', url: 'sections/about.html' },
+        { id: 'services', url: 'sections/services.html' },
+        { id: 'portfolio', url: 'sections/portfolio.html' },
+        { id: 'contact', url: 'sections/contact.html' }
+    ];
+
+    sectionsToLoad.forEach(section => loadHTML(section.id, section.url, section.onLoad));
+
+    function setupMasthead() {
+        lockScrollOnMasthead();
+
+        const unlockBtn = document.getElementById('unlock-btn');
+        if (unlockBtn) {
+            unlockBtn.addEventListener('click', handleUnlock);
+        }
+    }
+
+    function lockScrollOnMasthead() {
         document.body.style.overflow = 'hidden';
         const header = document.getElementById('masthead');
-        header.style.overflowY = 'auto'; // Only masthead scrolls initially
+        if (header) header.style.overflowY = 'auto';
+    }
 
-        // Ensure unlock button is present and add event listener
-        const unlockBtn = document.getElementById('unlock-btn');
-        unlockBtn.addEventListener('click', function(event) {
-            event.preventDefault(); // Prevent default anchor jump
-            document.body.style.overflow = 'auto'; // Unlock scrolling globally
-            header.style.overflowY = ''; // Reset masthead scroll
+    function handleUnlock(event) {
+        event.preventDefault();
+        document.body.style.overflow = 'auto'; // Unlock global scrolling
+        const header = document.getElementById('masthead');
+        if (header) header.style.overflowY = ''; // Reset masthead overflow
 
-            // Smoothly scroll to the about section
-            document.querySelector('#about').scrollIntoView({
-                behavior: 'smooth'
-            });
-        });
-    });
-
-    // Load other sections
-    loadHTML('about', 'sections/about.html');
-    loadHTML('services', 'sections/services.html');
-    loadHTML('portfolio', 'sections/portfolio.html');
-    loadHTML('contact', 'sections/contact.html');
+        document.querySelector('#about').scrollIntoView({ behavior: 'smooth' });
+    }
 });
 
 function loadHTML(id, url, callback) {
     fetch(url)
         .then(response => response.text())
         .then(data => {
-            document.getElementById(id).innerHTML = data;
-            if (callback) callback(); // Call callback after content loads
+            const element = document.getElementById(id);
+            if (element) {
+                element.innerHTML = data;
+                if (typeof callback === 'function') callback();
+            }
         })
-        .catch(error => console.error('Error loading HTML:', error));
+        .catch(error => console.error(`Error loading ${url}:`, error));
 }
+
 
 // get url param
 function get_param_url(){
