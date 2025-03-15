@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Force scroll to top immediately after DOM loads
     setTimeout(() => {
         window.scrollTo(0, 0);
-    }, 50);
+    }, 100);
 
     // Prevent browser from restoring scroll position on reload
     window.addEventListener("beforeunload", function() {
