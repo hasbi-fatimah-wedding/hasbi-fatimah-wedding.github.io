@@ -1,7 +1,13 @@
 document.addEventListener("DOMContentLoaded", function() {
-    window.onload = function() {
+    // Force scroll to top immediately after DOM loads
+    setTimeout(() => {
         window.scrollTo(0, 0);
-    };
+    }, 50);
+
+    // Prevent browser from restoring scroll position on reload
+    window.addEventListener("beforeunload", function() {
+        window.scrollTo(0, 0);
+    });
 
     const sectionsToLoad = [
         { id: 'masthead', url: 'sections/masthead.html', onLoad: setupMasthead },
@@ -31,9 +37,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function handleUnlock(event) {
         event.preventDefault();
-        document.body.style.overflow = 'auto'; // Unlock global scrolling
+        document.body.style.overflow = 'auto'; 
         const header = document.getElementById('masthead');
-        if (header) header.style.overflowY = ''; // Reset masthead overflow
+        if (header) header.style.overflowY = ''; 
 
         document.querySelector('#about').scrollIntoView({ behavior: 'smooth' });
     }
@@ -65,6 +71,6 @@ function loadHTML(id, url, callback) {
 }
 
 function capitalizeFirstLetter(str) {
-    if (!str) return str; // Check if the string is empty
+    if (!str) return str; 
     return str.charAt(0).toUpperCase() + str.slice(1);
-}
+}  
