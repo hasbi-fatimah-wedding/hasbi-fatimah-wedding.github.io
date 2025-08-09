@@ -290,33 +290,6 @@ class MobileNavigationController {
     }
 }
 
-// Initialize all components when DOM is loaded
-document.addEventListener("DOMContentLoaded", () => {
-    // Initialize navigation
-    const navigation = new NavigationController();
-    const mobileNavigation = new MobileNavigationController();
-
-    // Initialize countdown timer
-    const countdownTimer = new CountdownTimer();
-
-    // Make countdown timer globally accessible for debugging/testing
-    window.countdownTimer = countdownTimer;
-
-    // Handle window resize for mobile menu
-    window.addEventListener("resize", () => {
-        mobileNavigation.handleResize();
-    });
-
-    // Optional: Add keyboard shortcut for testing (Ctrl+Shift+T)
-    document.addEventListener("keydown", (e) => {
-        if (e.ctrlKey && e.shiftKey && e.key === "T") {
-            // Set target date to 10 seconds from now for testing
-            const testDate = new Date(Date.now() + 10000);
-            countdownTimer.updateTargetDate(testDate);
-            console.log("Countdown set to 10 seconds for testing");
-        }
-    });
-});
 // ===== COUNTDOWN TIMER FUNCTIONALITY =====
 
 /**
@@ -600,3 +573,357 @@ class CountdownTimer {
         }
     }
 }
+// ===== LOCATION MAP FUNCTIONALITY =====
+
+/**
+ * Location Map Controller
+ * Handles Google Maps integration and location-related functionality
+ */
+class LocationMapController {
+    constructor() {
+        // Venue coordinates (Yogyakarta example coordinates)
+        this.venueCoordinates = {
+            lat: -7.7956,
+            lng: 110.3695,
+        };
+
+        // Venue address for directions
+        this.venueAddress =
+            "Gedung Serbaguna Desa, Jl. Raya Desa No. 123, Yogyakarta, DIY 55281, Indonesia";
+
+        this.init();
+    }
+
+    init() {
+        // Make map functions globally accessible
+        window.openInMaps = this.openInMaps.bind(this);
+        window.getDirections = this.getDirections.bind(this);
+    }
+
+    /**
+     * Open venue location in default maps application
+     * Detects user's device and opens appropriate maps app
+     */
+    openInMaps() {
+        const { lat, lng } = this.venueCoordinates;
+
+        // Detect user's device/browser
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        const isAndroid = /Android/.test(navigator.userAgent);
+
+        let mapsUrl;
+
+        if (isIOS) {
+            // iOS - Try Apple Maps first, fallback to Google Maps
+            mapsUrl = `maps://maps.google.com/maps?daddr=${lat},${lng}&amp;ll=`;
+
+            // Fallback for devices without Apple Maps
+            const fallbackUrl = `https://maps.google.com/maps?daddr=${lat},${lng}`;
+
+            // Try to open Apple Maps
+            const link = document.createElement("a");
+            link.href = mapsUrl;
+            link.click();
+
+            // Fallback after a short delay
+            setTimeout(() => {
+                window.open(fallbackUrl, "_blank");
+            }, 500);
+        } else if (isAndroid) {
+            // Android - Use Google Maps intent
+            mapsUrl = `geo:${lat},${lng}?q=${lat},${lng}(${encodeURIComponent(
+                "Gedung Serbaguna Desa"
+            )})`;
+
+            // Fallback to web version
+            const fallbackUrl = `https://maps.google.com/maps?daddr=${lat},${lng}`;
+
+            try {
+                window.location.href = mapsUrl;
+            } catch (error) {
+                window.open(fallbackUrl, "_blank");
+            }
+        } else {
+            // Desktop or other devices - Open Google Maps in new tab
+            mapsUrl = `https://maps.google.com/maps?daddr=${lat},${lng}&amp;ll=`;
+            window.open(mapsUrl, "_blank");
+        }
+
+        // Analytics tracking (optional)
+        this.trackMapInteraction("open_in_maps");
+    }
+
+    /**
+     * Get directions to venue location
+     * Opens directions in appropriate maps application
+     */
+    getDirections() {
+        const { lat, lng } = this.venueCoordinates;
+
+        // Detect user's device/browser
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        const isAndroid = /Android/.test(navigator.userAgent);
+
+        let directionsUrl;
+
+        if (isIOS) {
+            // iOS - Apple Maps directions
+            directionsUrl = `maps://maps.google.com/maps?saddr=Current%20Location&daddr=${lat},${lng}`;
+
+            // Fallback to Google Maps web
+            const fallbackUrl = `https://maps.google.com/maps/dir/Current%20Location/${lat},${lng}`;
+
+            const link = document.createElement("a");
+            link.href = directionsUrl;
+            link.click();
+
+            setTimeout(() => {
+                window.open(fallbackUrl, "_blank");
+            }, 500);
+        } else if (isAndroid) {
+            // Android - Google Maps directions
+            directionsUrl = `google.navigation:q=${lat},${lng}`;
+
+            // Fallback to web version
+            const fallbackUrl = `https://maps.google.com/maps/dir/Current%20Location/${lat},${lng}`;
+
+            try {
+                window.location.href = directionsUrl;
+            } catch (error) {
+                window.open(fallbackUrl, "_blank");
+            }
+        } else {
+            // Desktop - Google Maps directions in new tab
+            directionsUrl = `https://maps.google.com/maps/dir/Current%20Location/${lat},${lng}`;
+            window.open(directionsUrl, "_blank");
+        }
+
+        // Analytics tracking (optional)
+        this.trackMapInteraction("get_directions");
+    }
+
+    /**
+     * Copy venue address to clipboard
+     * @returns {Promise<boolean>} Success status
+     */
+    async copyAddressToClipboard() {
+        try {
+            await navigator.clipboard.writeText(this.venueAddress);
+
+            // Show success feedback
+            this.showCopyFeedback(true);
+
+            // Analytics tracking
+            this.trackMapInteraction("copy_address");
+
+            return true;
+        } catch (error) {
+            console.warn("Failed to copy address to clipboard:", error);
+
+            // Fallback for older browsers
+            this.fallbackCopyToClipboard(this.venueAddress);
+
+            return false;
+        }
+    }
+
+    /**
+     * Fallback method to copy text to clipboard for older browsers
+     * @param {string} text - Text to copy
+     */
+    fallbackCopyToClipboard(text) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.left = "-999999px";
+        textArea.style.top = "-999999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+            document.execCommand("copy");
+            this.showCopyFeedback(true);
+        } catch (error) {
+            console.error("Fallback copy failed:", error);
+            this.showCopyFeedback(false);
+        }
+
+        document.body.removeChild(textArea);
+    }
+
+    /**
+     * Show visual feedback for copy operation
+     * @param {boolean} success - Whether copy was successful
+     */
+    showCopyFeedback(success) {
+        // Create temporary feedback element
+        const feedback = document.createElement("div");
+        feedback.className = "copy-feedback";
+        feedback.textContent = success
+            ? "Alamat disalin!"
+            : "Gagal menyalin alamat";
+        feedback.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: ${success ? "var(--accent)" : "#e74c3c"};
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-family: var(--font-secondary);
+            font-weight: 600;
+            z-index: 9999;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            animation: fadeInOut 2s ease-in-out forwards;
+        `;
+
+        // Add animation keyframes if not already added
+        if (!document.querySelector("#copy-feedback-styles")) {
+            const style = document.createElement("style");
+            style.id = "copy-feedback-styles";
+            style.textContent = `
+                @keyframes fadeInOut {
+                    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+                    20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+                    80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+                    100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        document.body.appendChild(feedback);
+
+        // Remove feedback element after animation
+        setTimeout(() => {
+            if (feedback.parentNode) {
+                feedback.parentNode.removeChild(feedback);
+            }
+        }, 2000);
+    }
+
+    /**
+     * Track map interactions for analytics (optional)
+     * @param {string} action - Action type
+     */
+    trackMapInteraction(action) {
+        // This is where you would integrate with your analytics service
+        // For example: Google Analytics, Facebook Pixel, etc.
+
+        console.log(`Map interaction: ${action}`);
+
+        // Example Google Analytics tracking (if gtag is available)
+        if (typeof gtag !== "undefined") {
+            gtag("event", "map_interaction", {
+                event_category: "location",
+                event_label: action,
+                value: 1,
+            });
+        }
+    }
+
+    /**
+     * Get distance between two coordinates (Haversine formula)
+     * @param {number} lat1 - Latitude of first point
+     * @param {number} lon1 - Longitude of first point
+     * @param {number} lat2 - Latitude of second point
+     * @param {number} lon2 - Longitude of second point
+     * @returns {number} Distance in kilometers
+     */
+    calculateDistance(lat1, lon1, lat2, lon2) {
+        const R = 6371; // Radius of the Earth in kilometers
+        const dLat = this.deg2rad(lat2 - lat1);
+        const dLon = this.deg2rad(lon2 - lon1);
+        const a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(this.deg2rad(lat1)) *
+                Math.cos(this.deg2rad(lat2)) *
+                Math.sin(dLon / 2) *
+                Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const distance = R * c; // Distance in kilometers
+        return distance;
+    }
+
+    /**
+     * Convert degrees to radians
+     * @param {number} deg - Degrees
+     * @returns {number} Radians
+     */
+    deg2rad(deg) {
+        return deg * (Math.PI / 180);
+    }
+
+    /**
+     * Get user's current location and calculate distance to venue
+     * @returns {Promise<Object>} Location and distance information
+     */
+    async getUserLocationAndDistance() {
+        return new Promise((resolve, reject) => {
+            if (!navigator.geolocation) {
+                reject(
+                    new Error("Geolocation is not supported by this browser")
+                );
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const userLat = position.coords.latitude;
+                    const userLng = position.coords.longitude;
+
+                    const distance = this.calculateDistance(
+                        userLat,
+                        userLng,
+                        this.venueCoordinates.lat,
+                        this.venueCoordinates.lng
+                    );
+
+                    resolve({
+                        userLocation: { lat: userLat, lng: userLng },
+                        venueLocation: this.venueCoordinates,
+                        distance: Math.round(distance * 10) / 10, // Round to 1 decimal place
+                    });
+                },
+                (error) => {
+                    reject(error);
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 300000, // 5 minutes
+                }
+            );
+        });
+    }
+}
+
+// Initialize location map controller when DOM is loaded
+document.addEventListener("DOMContentLoaded", () => {
+    // Initialize existing controllers
+    const navigation = new NavigationController();
+    const mobileNavigation = new MobileNavigationController();
+    const countdownTimer = new CountdownTimer();
+    const locationMap = new LocationMapController();
+
+    // Make controllers globally accessible for debugging/testing
+    window.countdownTimer = countdownTimer;
+    window.locationMap = locationMap;
+
+    // Handle window resize for mobile menu
+    window.addEventListener("resize", () => {
+        mobileNavigation.handleResize();
+    });
+
+    // Optional: Add keyboard shortcut for testing countdown (Ctrl+Shift+T)
+    document.addEventListener("keydown", (e) => {
+        if (e.ctrlKey && e.shiftKey && e.key === "T") {
+            // Set target date to 10 seconds from now for testing
+            const testDate = new Date(Date.now() + 10000);
+            countdownTimer.updateTargetDate(testDate);
+            console.log("Countdown set to 10 seconds for testing");
+        }
+    });
+});
