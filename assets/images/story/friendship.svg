@@ -1,0 +1,48 @@
+<svg width="400" height="225" viewBox="0 0 400 225" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="400" height="225" fill="#FAEBD7"/>
+  
+  <!-- Decorative pattern -->
+  <defs>
+    <pattern id="pattern2" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M15 5 L20 15 L15 25 L10 15 Z" fill="#DAA520" opacity="0.08"/>
+    </pattern>
+  </defs>
+  <rect width="400" height="225" fill="url(#pattern2)"/>
+  
+  <!-- Main illustration -->
+  <g transform="translate(200, 112.5)">
+    <!-- Coffee shop setting -->
+    <rect x="-100" y="10" width="200" height="30" fill="#8B4513" opacity="0.2"/>
+    
+    <!-- Table -->
+    <ellipse cx="0" cy="0" rx="40" ry="15" fill="#A0522D" opacity="0.6"/>
+    
+    <!-- Two figures sitting and talking -->
+    <g transform="translate(-20, -20)">
+      <circle cx="0" cy="0" r="8" fill="#A0522D"/>
+      <rect x="-5" y="8" width="10" height="20" fill="#CD853F"/>
+    </g>
+    
+    <g transform="translate(20, -20)">
+      <circle cx="0" cy="0" r="8" fill="#A0522D"/>
+      <rect x="-5" y="8" width="10" height="20" fill="#CD853F"/>
+    </g>
+    
+    <!-- Coffee cups -->
+    <circle cx="-15" cy="-5" r="3" fill="#8B4513"/>
+    <circle cx="15" cy="-5" r="3" fill="#8B4513"/>
+    
+    <!-- Speech bubbles -->
+    <ellipse cx="-35" cy="-35" rx="12" ry="8" fill="#F5F5DC" stroke="#DAA520" stroke-width="1"/>
+    <ellipse cx="35" cy="-35" rx="12" ry="8" fill="#F5F5DC" stroke="#DAA520" stroke-width="1"/>
+    
+    <!-- Stars representing good conversation -->
+    <path d="M-35 -35 L-33 -31 L-29 -31 L-32 -28 L-31 -24 L-35 -26 L-39 -24 L-38 -28 L-41 -31 L-37 -31 Z" fill="#DAA520"/>
+    <path d="M35 -35 L37 -31 L41 -31 L38 -28 L39 -24 L35 -26 L31 -24 L32 -28 L29 -31 L33 -31 Z" fill="#DAA520"/>
+  </g>
+  
+  <!-- Title -->
+  <text x="200" y="200" text-anchor="middle" fill="#8B4513" font-family="serif" font-size="16" font-weight="600">Persahabatan Terjalin</text>
+  <text x="200" y="215" text-anchor="middle" fill="#A0522D" font-family="sans-serif" font-size="12">Membangun Kedekatan - Agustus 2020</text>
+</svg>

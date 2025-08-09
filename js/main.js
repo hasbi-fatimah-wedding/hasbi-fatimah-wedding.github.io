@@ -900,7 +900,7 @@ class LocationMapController {
     }
 }
 
-// Initialize location map controller when DOM is loaded
+// Initialize all controllers when DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
     // Initialize existing controllers
     const navigation = new NavigationController();
@@ -908,16 +908,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const countdownTimer = new CountdownTimer();
     const locationMap = new LocationMapController();
 
+    // Initialize timeline controllers
+    const timelineAnimation = new TimelineAnimationController();
+    const timelineInteraction = new TimelineInteractionController();
+
     // Make controllers globally accessible for debugging/testing
     window.countdownTimer = countdownTimer;
     window.locationMap = locationMap;
+    window.timelineAnimation = timelineAnimation;
+    window.timelineInteraction = timelineInteraction;
 
     // Handle window resize for mobile menu
     window.addEventListener("resize", () => {
         mobileNavigation.handleResize();
     });
 
-    // Optional: Add keyboard shortcut for testing countdown (Ctrl+Shift+T)
+    // Optional: Add keyboard shortcuts for testing
     document.addEventListener("keydown", (e) => {
         if (e.ctrlKey && e.shiftKey && e.key === "T") {
             // Set target date to 10 seconds from now for testing
@@ -925,5 +931,442 @@ document.addEventListener("DOMContentLoaded", () => {
             countdownTimer.updateTargetDate(testDate);
             console.log("Countdown set to 10 seconds for testing");
         }
+
+        if (e.ctrlKey && e.shiftKey && e.key === "L") {
+            // Test timeline animations
+            timelineAnimation.triggerAllAnimations();
+            console.log("Timeline animations triggered for testing");
+        }
+
+        if (e.ctrlKey && e.shiftKey && e.key === "R") {
+            // Reset timeline animations
+            timelineAnimation.resetAnimations();
+            console.log("Timeline animations reset");
+        }
     });
 });
+
+// ===== LOVE STORY TIMELINE FUNCTIONALITY =====
+
+/**
+ * Timeline Animation Controller
+ * Handles scroll-triggered animations for timeline items
+ */
+class TimelineAnimationController {
+    constructor() {
+        this.timelineItems = document.querySelectorAll(".timeline-item");
+        this.observerOptions = {
+            root: null,
+            rootMargin: "-10% 0px -10% 0px",
+            threshold: 0.1,
+        };
+
+        this.observer = null;
+        this.animatedItems = new Set();
+
+        this.init();
+    }
+
+    init() {
+        if (this.timelineItems.length === 0) {
+            console.warn("No timeline items found");
+            return;
+        }
+
+        this.setupIntersectionObserver();
+        this.setupInitialState();
+    }
+
+    /**
+     * Setup intersection observer for scroll-triggered animations
+     */
+    setupIntersectionObserver() {
+        this.observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (
+                    entry.isIntersecting &&
+                    !this.animatedItems.has(entry.target)
+                ) {
+                    this.animateTimelineItem(entry.target);
+                    this.animatedItems.add(entry.target);
+                }
+            });
+        }, this.observerOptions);
+
+        // Observe all timeline items
+        this.timelineItems.forEach((item) => {
+            this.observer.observe(item);
+        });
+    }
+
+    /**
+     * Setup initial state for timeline items
+     */
+    setupInitialState() {
+        this.timelineItems.forEach((item, index) => {
+            // Add data attributes for animation
+            item.setAttribute("data-timeline-index", index);
+
+            // Set initial state
+            item.style.opacity = "0";
+            item.style.transform = "translateY(30px)";
+        });
+    }
+
+    /**
+     * Animate timeline item when it comes into view
+     * @param {Element} item - Timeline item to animate
+     */
+    animateTimelineItem(item) {
+        const index = parseInt(item.getAttribute("data-timeline-index"));
+        const delay = index * 150; // Staggered animation delay
+
+        setTimeout(() => {
+            item.classList.add("animate");
+            item.style.opacity = "1";
+            item.style.transform = "translateY(0)";
+
+            // Add pulse effect to timeline icon
+            const icon = item.querySelector(".timeline-icon");
+            if (icon) {
+                this.addPulseEffect(icon);
+            }
+
+            // Trigger card entrance animation
+            const card = item.querySelector(".timeline-card");
+            if (card) {
+                this.animateCard(card, index);
+            }
+        }, delay);
+    }
+
+    /**
+     * Add pulse effect to timeline icon
+     * @param {Element} icon - Timeline icon element
+     */
+    addPulseEffect(icon) {
+        icon.style.animation = "timelinePulse 0.6s ease-out";
+
+        // Remove animation after completion
+        setTimeout(() => {
+            icon.style.animation = "";
+        }, 600);
+    }
+
+    /**
+     * Animate timeline card with enhanced effects
+     * @param {Element} card - Timeline card element
+     * @param {number} index - Item index for alternating animations
+     */
+    animateCard(card) {
+        // Add entrance animation class
+        card.classList.add("card-entrance");
+
+        // Remove animation class after completion
+        setTimeout(() => {
+            card.classList.remove("card-entrance");
+        }, 800);
+    }
+
+    /**
+     * Reset all animations (useful for testing or re-triggering)
+     */
+    resetAnimations() {
+        this.animatedItems.clear();
+
+        this.timelineItems.forEach((item) => {
+            item.classList.remove("animate");
+            item.style.opacity = "0";
+            item.style.transform = "translateY(30px)";
+
+            const card = item.querySelector(".timeline-card");
+            if (card) {
+                card.classList.remove("card-entrance");
+            }
+
+            const icon = item.querySelector(".timeline-icon");
+            if (icon) {
+                icon.style.animation = "";
+            }
+        });
+    }
+
+    /**
+     * Trigger all animations immediately (for testing)
+     */
+    triggerAllAnimations() {
+        this.timelineItems.forEach((item, index) => {
+            setTimeout(() => {
+                this.animateTimelineItem(item);
+            }, index * 200);
+        });
+    }
+
+    /**
+     * Destroy the timeline controller and clean up
+     */
+    destroy() {
+        if (this.observer) {
+            this.observer.disconnect();
+            this.observer = null;
+        }
+
+        this.animatedItems.clear();
+
+        // Reset all items to initial state
+        this.timelineItems.forEach((item) => {
+            item.style.opacity = "";
+            item.style.transform = "";
+            item.classList.remove("animate");
+        });
+    }
+}
+
+/**
+ * Timeline Interaction Controller
+ * Handles interactive features for timeline items
+ */
+class TimelineInteractionController {
+    constructor() {
+        this.timelineItems = document.querySelectorAll(".timeline-item");
+        this.timelineCards = document.querySelectorAll(".timeline-card");
+
+        this.init();
+    }
+
+    init() {
+        this.setupCardInteractions();
+        this.setupKeyboardNavigation();
+        this.setupAccessibilityFeatures();
+    }
+
+    /**
+     * Setup interactive features for timeline cards
+     */
+    setupCardInteractions() {
+        this.timelineCards.forEach((card, index) => {
+            // Add hover sound effect (optional)
+            card.addEventListener("mouseenter", () => {
+                this.handleCardHover(card, index);
+            });
+
+            // Add click interaction for mobile
+            card.addEventListener("click", (e) => {
+                this.handleCardClick(card, e);
+            });
+
+            // Add focus handling for accessibility
+            card.addEventListener("focus", () => {
+                this.handleCardFocus(card);
+            });
+        });
+    }
+
+    /**
+     * Handle card hover effects
+     * @param {Element} card - Timeline card element
+     * @param {number} index - Card index
+     */
+    handleCardHover(card, index) {
+        // Add subtle animation to the corresponding timeline icon
+        const item = card.closest(".timeline-item");
+        const icon = item?.querySelector(".timeline-icon");
+
+        if (icon) {
+            icon.style.transform = "scale(1.05)";
+            icon.style.transition = "transform 0.2s ease";
+        }
+
+        // Optional: Add sound effect or haptic feedback
+        // this.playHoverSound(index);
+    }
+
+    /**
+     * Handle card click interactions
+     * @param {Element} card - Timeline card element
+     * @param {Event} e - Click event
+     */
+    handleCardClick(card, e) {
+        // Add click ripple effect
+        this.createRippleEffect(card, e);
+
+        // Optional: Expand card or show more details
+        // this.expandCard(card);
+    }
+
+    /**
+     * Handle card focus for accessibility
+     * @param {Element} card - Timeline card element
+     */
+    handleCardFocus(card) {
+        // Ensure card is visible when focused
+        card.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+        });
+    }
+
+    /**
+     * Create ripple effect on card click
+     * @param {Element} card - Timeline card element
+     * @param {Event} e - Click event
+     */
+    createRippleEffect(card, e) {
+        const ripple = document.createElement("div");
+        const rect = card.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+
+        ripple.style.cssText = `
+            position: absolute;
+            width: ${size}px;
+            height: ${size}px;
+            left: ${x}px;
+            top: ${y}px;
+            background: rgba(218, 165, 32, 0.3);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple 0.6s ease-out;
+            pointer-events: none;
+            z-index: 1;
+        `;
+
+        // Add ripple animation keyframes if not already added
+        if (!document.querySelector("#ripple-animation-styles")) {
+            const style = document.createElement("style");
+            style.id = "ripple-animation-styles";
+            style.textContent = `
+                @keyframes ripple {
+                    to {
+                        transform: scale(2);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        card.style.position = "relative";
+        card.style.overflow = "hidden";
+        card.appendChild(ripple);
+
+        // Remove ripple after animation
+        setTimeout(() => {
+            if (ripple.parentNode) {
+                ripple.parentNode.removeChild(ripple);
+            }
+        }, 600);
+    }
+
+    /**
+     * Setup keyboard navigation for timeline
+     */
+    setupKeyboardNavigation() {
+        this.timelineCards.forEach((card, index) => {
+            // Make cards focusable
+            card.setAttribute("tabindex", "0");
+            card.setAttribute("role", "button");
+            card.setAttribute("aria-label", `Timeline item ${index + 1}`);
+
+            // Handle keyboard interactions
+            card.addEventListener("keydown", (e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    this.handleCardClick(card, e);
+                }
+            });
+        });
+    }
+
+    /**
+     * Setup accessibility features
+     */
+    setupAccessibilityFeatures() {
+        // Add ARIA labels and descriptions
+        this.timelineItems.forEach((item, index) => {
+            const title = item.querySelector(".timeline-title")?.textContent;
+            const date = item.querySelector(".timeline-date time")?.textContent;
+
+            if (title && date) {
+                item.setAttribute("aria-label", `${title} - ${date}`);
+            }
+        });
+
+        // Add live region for screen readers when animations trigger
+        const liveRegion = document.createElement("div");
+        liveRegion.setAttribute("aria-live", "polite");
+        liveRegion.setAttribute("aria-atomic", "true");
+        liveRegion.className = "sr-only";
+        liveRegion.id = "timeline-live-region";
+        document.body.appendChild(liveRegion);
+    }
+
+    /**
+     * Announce timeline item to screen readers
+     * @param {Element} item - Timeline item element
+     */
+    announceTimelineItem(item) {
+        const liveRegion = document.getElementById("timeline-live-region");
+        const title = item.querySelector(".timeline-title")?.textContent;
+        const date = item.querySelector(".timeline-date time")?.textContent;
+
+        if (liveRegion && title && date) {
+            liveRegion.textContent = `Timeline item revealed: ${title} from ${date}`;
+        }
+    }
+}
+
+// Add timeline animation keyframes to CSS
+if (!document.querySelector("#timeline-animation-styles")) {
+    const style = document.createElement("style");
+    style.id = "timeline-animation-styles";
+    style.textContent = `
+        @keyframes timelinePulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 4px 15px rgba(218, 165, 32, 0.4);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 6px 25px rgba(218, 165, 32, 0.7);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 4px 15px rgba(218, 165, 32, 0.4);
+            }
+        }
+
+        .card-entrance {
+            animation: cardSlideIn 0.8s ease-out;
+        }
+
+        @keyframes cardSlideIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Alternate animation for even items */
+        .timeline-item:nth-child(even) .card-entrance {
+            animation: cardSlideInRight 0.8s ease-out;
+        }
+
+        @keyframes cardSlideInRight {
+            0% {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+    `;
+    document.head.appendChild(style);
+}

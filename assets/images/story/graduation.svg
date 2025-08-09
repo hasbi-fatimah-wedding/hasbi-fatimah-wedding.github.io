@@ -1,0 +1,68 @@
+<svg width="400" height="225" viewBox="0 0 400 225" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="400" height="225" fill="#FAEBD7"/>
+  
+  <!-- Decorative pattern -->
+  <defs>
+    <pattern id="pattern4" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M30 10 L35 20 L45 20 L37 28 L40 38 L30 33 L20 38 L23 28 L15 20 L25 20 Z" fill="#DAA520" opacity="0.06"/>
+    </pattern>
+  </defs>
+  <rect width="400" height="225" fill="url(#pattern4)"/>
+  
+  <!-- Main illustration -->
+  <g transform="translate(200, 112.5)">
+    <!-- University building in background -->
+    <rect x="-100" y="-20" width="200" height="50" fill="#8B4513" opacity="0.2"/>
+    <polygon points="-100,-20 0,-40 100,-20" fill="#A0522D" opacity="0.3"/>
+    
+    <!-- Two graduates in caps and gowns -->
+    <g transform="translate(-25, -5)">
+      <!-- Graduation cap -->
+      <rect x="-8" y="-25" width="16" height="3" fill="#2F1B14"/>
+      <rect x="-12" y="-28" width="24" height="2" fill="#2F1B14"/>
+      <!-- Tassel -->
+      <line x1="8" y1="-26" x2="15" y2="-20" stroke="#DAA520" stroke-width="2"/>
+      <circle cx="15" cy="-18" r="2" fill="#DAA520"/>
+      
+      <!-- Head -->
+      <circle cx="0" cy="-15" r="8" fill="#A0522D"/>
+      
+      <!-- Graduation gown -->
+      <rect x="-10" y="-7" width="20" height="30" fill="#2F1B14"/>
+      <rect x="-8" y="-5" width="16" height="25" fill="#8B4513"/>
+    </g>
+    
+    <g transform="translate(25, -5)">
+      <!-- Graduation cap -->
+      <rect x="-8" y="-25" width="16" height="3" fill="#2F1B14"/>
+      <rect x="-12" y="-28" width="24" height="2" fill="#2F1B14"/>
+      <!-- Tassel -->
+      <line x1="-8" y1="-26" x2="-15" y2="-20" stroke="#DAA520" stroke-width="2"/>
+      <circle cx="-15" cy="-18" r="2" fill="#DAA520"/>
+      
+      <!-- Head -->
+      <circle cx="0" cy="-15" r="8" fill="#A0522D"/>
+      
+      <!-- Graduation gown -->
+      <rect x="-10" y="-7" width="20" height="30" fill="#2F1B14"/>
+      <rect x="-8" y="-5" width="16" height="25" fill="#8B4513"/>
+    </g>
+    
+    <!-- Diplomas -->
+    <rect x="-35" y="5" width="8" height="12" fill="#F5F5DC" stroke="#DAA520" stroke-width="1"/>
+    <rect x="27" y="5" width="8" height="12" fill="#F5F5DC" stroke="#DAA520" stroke-width="1"/>
+    
+    <!-- Celebration confetti -->
+    <circle cx="-60" cy="-40" r="2" fill="#DAA520"/>
+    <circle cx="-45" cy="-45" r="1.5" fill="#CD853F"/>
+    <circle cx="60" cy="-35" r="2" fill="#DAA520"/>
+    <circle cx="45" cy="-50" r="1.5" fill="#CD853F"/>
+    <rect x="-70" y="-30" width="3" height="3" fill="#A0522D" transform="rotate(45 -70 -30)"/>
+    <rect x="70" y="-25" width="3" height="3" fill="#A0522D" transform="rotate(45 70 -25)"/>
+  </g>
+  
+  <!-- Title -->
+  <text x="200" y="200" text-anchor="middle" fill="#8B4513" font-family="serif" font-size="16" font-weight="600">Kelulusan Bersama</text>
+  <text x="200" y="215" text-anchor="middle" fill="#A0522D" font-family="sans-serif" font-size="12">Meraih Gelar Sarjana - Juli 2022</text>
+</svg>

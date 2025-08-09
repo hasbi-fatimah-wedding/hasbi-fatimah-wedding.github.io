@@ -1,0 +1,61 @@
+<svg width="400" height="225" viewBox="0 0 400 225" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="400" height="225" fill="#F5F5DC"/>
+  
+  <!-- Christmas decorative pattern -->
+  <defs>
+    <pattern id="pattern5" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M20 5 L22 15 L32 15 L24 22 L27 32 L20 27 L13 32 L16 22 L8 15 L18 15 Z" fill="#DAA520" opacity="0.08"/>
+    </pattern>
+  </defs>
+  <rect width="400" height="225" fill="url(#pattern5)"/>
+  
+  <!-- Main illustration -->
+  <g transform="translate(200, 112.5)">
+    <!-- Christmas tree in background -->
+    <polygon points="0,-50 -15,-20 15,-20" fill="#228B22" opacity="0.6"/>
+    <polygon points="0,-40 -20,-10 20,-10" fill="#228B22" opacity="0.6"/>
+    <polygon points="0,-30 -25,0 25,0" fill="#228B22" opacity="0.6"/>
+    <rect x="-3" y="0" width="6" height="15" fill="#8B4513"/>
+    
+    <!-- Star on top of tree -->
+    <path d="M0 -50 L2 -44 L8 -44 L3 -40 L5 -34 L0 -37 L-5 -34 L-3 -40 L-8 -44 L-2 -44 Z" fill="#DAA520"/>
+    
+    <!-- Proposal scene -->
+    <g transform="translate(-15, 10)">
+      <!-- Male figure kneeling -->
+      <circle cx="0" cy="-20" r="8" fill="#A0522D"/>
+      <rect x="-6" y="-12" width="12" height="15" fill="#8B4513"/>
+      <!-- Kneeling position -->
+      <rect x="-8" y="3" width="6" height="15" fill="#8B4513"/>
+      <rect x="2" y="8" width="6" height="10" fill="#8B4513"/>
+    </g>
+    
+    <g transform="translate(15, 5)">
+      <!-- Female figure standing -->
+      <circle cx="0" cy="-25" r="8" fill="#A0522D"/>
+      <rect x="-6" y="-17" width="12" height="25" fill="#CD853F"/>
+      <!-- Dress -->
+      <path d="M-8 8 L8 8 L6 25 L-6 25 Z" fill="#A0522D"/>
+    </g>
+    
+    <!-- Ring box -->
+    <rect x="-20" y="0" width="4" height="3" fill="#8B4513"/>
+    <ellipse cx="-18" cy="-1" rx="2" ry="1" fill="#DAA520"/>
+    
+    <!-- Sparkles around ring -->
+    <path d="M-15 -5 L-14 -3 L-12 -3 L-13 -2 L-12 0 L-15 -1 L-18 0 L-17 -2 L-18 -3 L-16 -3 Z" fill="#DAA520" opacity="0.8"/>
+    <circle cx="-22" cy="-3" r="1" fill="#DAA520" opacity="0.6"/>
+    <circle cx="-14" cy="-6" r="0.5" fill="#DAA520" opacity="0.6"/>
+    
+    <!-- Christmas lights -->
+    <circle cx="-40" cy="-25" r="2" fill="#FF0000" opacity="0.7"/>
+    <circle cx="40" cy="-30" r="2" fill="#00FF00" opacity="0.7"/>
+    <circle cx="-50" cy="10" r="2" fill="#0000FF" opacity="0.7"/>
+    <circle cx="50" cy="5" r="2" fill="#FFD700" opacity="0.7"/>
+  </g>
+  
+  <!-- Title -->
+  <text x="200" y="200" text-anchor="middle" fill="#8B4513" font-family="serif" font-size="16" font-weight="600">Lamaran di Hari Natal</text>
+  <text x="200" y="215" text-anchor="middle" fill="#A0522D" font-family="sans-serif" font-size="12">Momen Bersejarah - 25 Desember 2023</text>
+</svg>

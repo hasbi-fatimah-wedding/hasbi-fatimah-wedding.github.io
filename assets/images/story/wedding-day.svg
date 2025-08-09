@@ -1,0 +1,78 @@
+<svg width="400" height="225" viewBox="0 0 400 225" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="400" height="225" fill="#FAEBD7"/>
+  
+  <!-- Decorative Javanese pattern -->
+  <defs>
+    <pattern id="pattern6" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
+      <circle cx="40" cy="40" r="20" fill="none" stroke="#DAA520" stroke-width="1" opacity="0.1"/>
+      <path d="M40 20 C50 30, 50 50, 40 60 C30 50, 30 30, 40 20 Z" fill="#CD853F" opacity="0.05"/>
+    </pattern>
+  </defs>
+  <rect width="400" height="225" fill="url(#pattern6)"/>
+  
+  <!-- Main illustration -->
+  <g transform="translate(200, 112.5)">
+    <!-- Wedding venue background -->
+    <rect x="-120" y="-30" width="240" height="70" fill="#8B4513" opacity="0.2"/>
+    <polygon points="-120,-30 0,-50 120,-30" fill="#A0522D" opacity="0.3"/>
+    
+    <!-- Traditional Javanese wedding couple -->
+    <g transform="translate(-30, -10)">
+      <!-- Bride in traditional Javanese dress -->
+      <!-- Head with traditional headdress -->
+      <circle cx="0" cy="-20" r="10" fill="#A0522D"/>
+      <!-- Traditional headdress (paes) -->
+      <path d="M-12 -25 C-15 -30, -10 -35, 0 -32 C10 -35, 15 -30, 12 -25" fill="#DAA520"/>
+      <circle cx="-8" cy="-28" r="2" fill="#DAA520"/>
+      <circle cx="0" cy="-30" r="2" fill="#DAA520"/>
+      <circle cx="8" cy="-28" r="2" fill="#DAA520"/>
+      
+      <!-- Traditional kebaya -->
+      <rect x="-12" y="-10" width="24" height="35" fill="#CD853F"/>
+      <!-- Batik pattern -->
+      <rect x="-10" y="-8" width="20" height="30" fill="#8B4513" opacity="0.3"/>
+      
+      <!-- Traditional jarik (skirt) -->
+      <path d="M-15 25 L15 25 L12 45 L-12 45 Z" fill="#A0522D"/>
+    </g>
+    
+    <g transform="translate(30, -10)">
+      <!-- Groom in traditional Javanese attire -->
+      <!-- Head with blangkon -->
+      <circle cx="0" cy="-20" r="10" fill="#A0522D"/>
+      <!-- Blangkon (traditional hat) -->
+      <path d="M-10 -25 C-12 -28, -8 -32, 0 -30 C8 -32, 12 -28, 10 -25 L8 -22 L-8 -22 Z" fill="#2F1B14"/>
+      
+      <!-- Traditional beskap -->
+      <rect x="-12" y="-10" width="24" height="40" fill="#2F1B14"/>
+      <!-- Gold buttons -->
+      <circle cx="-6" cy="-5" r="1" fill="#DAA520"/>
+      <circle cx="-6" cy="0" r="1" fill="#DAA520"/>
+      <circle cx="-6" cy="5" r="1" fill="#DAA520"/>
+      
+      <!-- Traditional jarik pants -->
+      <rect x="-10" y="30" width="8" height="15" fill="#8B4513"/>
+      <rect x="2" y="30" width="8" height="15" fill="#8B4513"/>
+    </g>
+    
+    <!-- Wedding rings -->
+    <circle cx="0" cy="-5" r="8" fill="none" stroke="#DAA520" stroke-width="2" opacity="0.8"/>
+    <circle cx="0" cy="-5" r="5" fill="none" stroke="#DAA520" stroke-width="1" opacity="0.6"/>
+    
+    <!-- Traditional Javanese wedding decorations -->
+    <!-- Flower petals -->
+    <ellipse cx="-60" cy="-40" rx="3" ry="2" fill="#FF69B4" opacity="0.7" transform="rotate(30 -60 -40)"/>
+    <ellipse cx="-50" cy="-45" rx="3" ry="2" fill="#FFB6C1" opacity="0.7" transform="rotate(-20 -50 -45)"/>
+    <ellipse cx="60" cy="-35" rx="3" ry="2" fill="#FF69B4" opacity="0.7" transform="rotate(45 60 -35)"/>
+    <ellipse cx="50" cy="-50" rx="3" ry="2" fill="#FFB6C1" opacity="0.7" transform="rotate(-30 50 -50)"/>
+    
+    <!-- Traditional ornaments -->
+    <path d="M-80 20 C-85 15, -75 10, -70 15 C-65 10, -55 15, -60 20" fill="#DAA520" opacity="0.6"/>
+    <path d="M80 20 C85 15, 75 10, 70 15 C65 10, 55 15, 60 20" fill="#DAA520" opacity="0.6"/>
+  </g>
+  
+  <!-- Title -->
+  <text x="200" y="200" text-anchor="middle" fill="#8B4513" font-family="serif" font-size="16" font-weight="600">Hari Pernikahan</text>
+  <text x="200" y="215" text-anchor="middle" fill="#A0522D" font-family="sans-serif" font-size="12">Janji Suci - 5 Oktober 2025</text>
+</svg>
