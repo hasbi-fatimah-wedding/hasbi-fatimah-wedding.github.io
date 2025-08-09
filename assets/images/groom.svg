@@ -1,0 +1,21 @@
+<svg width="220" height="280" viewBox="0 0 220 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="220" height="280" fill="#F5F5DC"/>
+  <rect x="10" y="10" width="200" height="260" fill="#FAEBD7" stroke="#8B4513" stroke-width="2"/>
+  
+  <!-- Decorative Border Pattern -->
+  <rect x="20" y="20" width="180" height="240" fill="none" stroke="#CD853F" stroke-width="1" opacity="0.5"/>
+  
+  <!-- Placeholder Portrait -->
+  <circle cx="110" cy="100" r="40" fill="#8B4513" opacity="0.3"/>
+  <rect x="70" y="140" width="80" height="100" fill="#A0522D" opacity="0.3" rx="10"/>
+  
+  <!-- Decorative Elements -->
+  <circle cx="40" cy="40" r="8" fill="#CD853F" opacity="0.6"/>
+  <circle cx="180" cy="40" r="8" fill="#CD853F" opacity="0.6"/>
+  <circle cx="40" cy="240" r="8" fill="#CD853F" opacity="0.6"/>
+  <circle cx="180" cy="240" r="8" fill="#CD853F" opacity="0.6"/>
+  
+  <!-- Text -->
+  <text x="110" y="200" text-anchor="middle" fill="#8B4513" font-family="serif" font-size="14" opacity="0.7">Mempelai Pria</text>
+  <text x="110" y="220" text-anchor="middle" fill="#A0522D" font-family="serif" font-size="12" opacity="0.5">Groom Photo</text>
+</svg>
