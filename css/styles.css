@@ -2678,3 +2678,440 @@ select:focus {
         display: none;
     }
 }
+
+/* ===== EVENT DETAILS AND COUNTDOWN TIMER STYLES ===== */
+
+.event-section {
+    padding: var(--spacing-xxl) 0;
+    background: linear-gradient(
+        135deg,
+        var(--light-cream) 0%,
+        var(--cream) 50%,
+        var(--light-cream) 100%
+    );
+    position: relative;
+    overflow: hidden;
+}
+
+/* Decorative Background Pattern for Event Section */
+.event-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(
+            circle at 20% 80%,
+            rgba(218, 165, 32, 0.06) 0%,
+            transparent 50%
+        ),
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(139, 69, 19, 0.04) 0%,
+            transparent 50%
+        );
+    z-index: 1;
+}
+
+.event-section .container {
+    position: relative;
+    z-index: 2;
+}
+
+.event-section .section-title {
+    text-align: center;
+    margin-bottom: var(--spacing-xxl);
+    color: var(--primary-brown);
+    font-size: var(--font-size-4xl);
+    font-weight: 700;
+    position: relative;
+}
+
+/* Decorative underline for section title */
+.event-section .section-title::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--accent), var(--gold));
+    border-radius: 2px;
+}
+
+.event-details {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xxl);
+    align-items: start;
+}
+
+/* Event Information Card */
+.event-info {
+    display: flex;
+    justify-content: center;
+}
+
+.event-card {
+    background: var(--light-text);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-lg);
+    text-align: center;
+    position: relative;
+    max-width: 500px;
+    width: 100%;
+    transition: transform var(--transition-normal),
+        box-shadow var(--transition-normal);
+}
+
+.event-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 40px rgba(47, 27, 20, 0.15);
+}
+
+/* Traditional Javanese corner ornaments for event card */
+.event-card::before,
+.event-card::after {
+    content: "";
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(
+        circle,
+        var(--gold) 0%,
+        var(--accent) 70%,
+        transparent 100%
+    );
+    border-radius: 50%;
+    opacity: 0.2;
+}
+
+.event-card::before {
+    top: 15px;
+    left: 15px;
+}
+
+.event-card::after {
+    bottom: 15px;
+    right: 15px;
+}
+
+.event-subtitle {
+    color: var(--primary-brown);
+    font-size: var(--font-size-2xl);
+    font-weight: 600;
+    margin-bottom: var(--spacing-lg);
+    font-family: var(--font-primary);
+}
+
+.event-date-time {
+    margin-bottom: var(--spacing-lg);
+}
+
+.event-date {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--secondary-brown);
+    margin-bottom: var(--spacing-xs);
+}
+
+.event-time {
+    font-size: var(--font-size-lg);
+    color: var(--accent);
+    font-weight: 500;
+}
+
+.event-venue {
+    border-top: 2px solid var(--cream);
+    padding-top: var(--spacing-lg);
+}
+
+.venue-name {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--primary-brown);
+    margin-bottom: var(--spacing-xs);
+}
+
+.venue-address {
+    font-size: var(--font-size-base);
+    color: var(--dark-text);
+    line-height: 1.5;
+}
+
+/* Countdown Timer Styles */
+.countdown-timer {
+    text-align: center;
+    padding: 0 var(--spacing-sm);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.countdown-title {
+    color: var(--primary-brown);
+    font-size: var(--font-size-2xl);
+    font-weight: 600;
+    margin-bottom: var(--spacing-xl);
+    font-family: var(--font-primary);
+    position: relative;
+}
+
+/* Decorative elements for countdown title */
+.countdown-title::before,
+.countdown-title::after {
+    content: "❋";
+    color: var(--gold);
+    font-size: var(--font-size-lg);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.countdown-title::before {
+    left: -30px;
+}
+
+.countdown-title::after {
+    right: -30px;
+}
+
+.countdown-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 var(--spacing-sm);
+}
+
+.countdown-card {
+    background: var(--light-text);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-md);
+    position: relative;
+    transition: all var(--transition-normal);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    min-width: 0; /* Allow cards to shrink */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Traditional Javanese border pattern */
+.countdown-card::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(
+        45deg,
+        var(--gold),
+        var(--accent),
+        var(--gold),
+        var(--accent)
+    );
+    border-radius: var(--radius-lg);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+}
+
+.countdown-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: var(--shadow-lg);
+}
+
+.countdown-card:hover::before {
+    opacity: 1;
+}
+
+.countdown-number {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    color: var(--primary-brown);
+    font-family: var(--font-primary);
+    line-height: 1;
+    margin-bottom: var(--spacing-xs);
+    transition: all var(--transition-fast);
+    position: relative;
+    display: block;
+    text-align: center;
+}
+
+/* Number animation effect */
+.countdown-number.updating {
+    transform: scale(1.1);
+    color: var(--gold);
+}
+
+.countdown-label {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: block;
+    text-align: center;
+}
+
+/* Countdown Message (when event is reached) */
+.countdown-message {
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background: linear-gradient(135deg, var(--gold) 0%, var(--accent) 100%);
+    color: var(--light-text);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    text-align: center;
+    animation: celebration 2s ease-in-out infinite alternate;
+}
+
+@keyframes celebration {
+    0% {
+        transform: scale(1);
+        box-shadow: var(--shadow-lg);
+    }
+    100% {
+        transform: scale(1.02);
+        box-shadow: 0 15px 30px rgba(218, 165, 32, 0.4);
+    }
+}
+
+/* Responsive Design for Event Section */
+@media (max-width: 767px) {
+    .event-details {
+        gap: var(--spacing-xl);
+    }
+
+    .event-card {
+        padding: var(--spacing-lg);
+        margin: 0 var(--spacing-sm);
+    }
+
+    .event-card::before,
+    .event-card::after {
+        width: 30px;
+        height: 30px;
+    }
+
+    .event-card::before {
+        top: 10px;
+        left: 10px;
+    }
+
+    .event-card::after {
+        bottom: 10px;
+        right: 10px;
+    }
+
+    .countdown-title::before,
+    .countdown-title::after {
+        display: none;
+    }
+
+    .countdown-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-xs);
+        max-width: 100%;
+        padding: 0 var(--spacing-xs);
+    }
+
+    .countdown-card {
+        padding: var(--spacing-md);
+    }
+
+    .countdown-number {
+        font-size: var(--font-size-3xl);
+    }
+
+    .countdown-label {
+        font-size: var(--font-size-xs);
+    }
+}
+
+@media (min-width: 768px) {
+    .event-details {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-xxl);
+        align-items: center;
+    }
+
+    .countdown-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--spacing-md);
+        max-width: 500px;
+        padding: 0;
+    }
+
+    .countdown-card {
+        padding: var(--spacing-lg);
+    }
+
+    .countdown-number {
+        font-size: var(--font-size-4xl);
+    }
+}
+
+@media (min-width: 1024px) {
+    .event-details {
+        gap: calc(var(--spacing-xxl) * 1.5);
+    }
+
+    .countdown-title {
+        font-size: var(--font-size-3xl);
+    }
+
+    .countdown-grid {
+        max-width: 600px;
+        gap: var(--spacing-lg);
+    }
+
+    .countdown-card {
+        padding: var(--spacing-xl);
+    }
+
+    .countdown-number {
+        font-size: var(--font-size-5xl);
+    }
+}
+
+/* Animation for countdown cards on load */
+.countdown-card {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.countdown-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.countdown-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.countdown-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.countdown-card:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

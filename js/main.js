@@ -290,13 +290,313 @@ class MobileNavigationController {
     }
 }
 
-// Initialize navigation when DOM is loaded
+// Initialize all components when DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
+    // Initialize navigation
     const navigation = new NavigationController();
     const mobileNavigation = new MobileNavigationController();
+
+    // Initialize countdown timer
+    const countdownTimer = new CountdownTimer();
+
+    // Make countdown timer globally accessible for debugging/testing
+    window.countdownTimer = countdownTimer;
 
     // Handle window resize for mobile menu
     window.addEventListener("resize", () => {
         mobileNavigation.handleResize();
     });
+
+    // Optional: Add keyboard shortcut for testing (Ctrl+Shift+T)
+    document.addEventListener("keydown", (e) => {
+        if (e.ctrlKey && e.shiftKey && e.key === "T") {
+            // Set target date to 10 seconds from now for testing
+            const testDate = new Date(Date.now() + 10000);
+            countdownTimer.updateTargetDate(testDate);
+            console.log("Countdown set to 10 seconds for testing");
+        }
+    });
 });
+// ===== COUNTDOWN TIMER FUNCTIONALITY =====
+
+/**
+ * Countdown Timer Controller
+ * Handles countdown timer functionality with smooth animations
+ */
+class CountdownTimer {
+    constructor() {
+        // Wedding date - October 5, 2025 at 08:00 AM
+        this.targetDate = new Date("2025-10-05T08:00:00").getTime();
+
+        // DOM elements
+        this.daysElement = document.getElementById("days");
+        this.hoursElement = document.getElementById("hours");
+        this.minutesElement = document.getElementById("minutes");
+        this.secondsElement = document.getElementById("seconds");
+        this.messageElement = document.getElementById("countdown-message");
+        this.timerContainer = document.querySelector(".countdown-timer");
+
+        // Timer state
+        this.intervalId = null;
+        this.isEventReached = false;
+
+        // Previous values for animation detection
+        this.previousValues = {
+            days: null,
+            hours: null,
+            minutes: null,
+            seconds: null,
+        };
+
+        this.init();
+    }
+
+    init() {
+        // Check if all required elements exist
+        if (
+            !this.daysElement ||
+            !this.hoursElement ||
+            !this.minutesElement ||
+            !this.secondsElement
+        ) {
+            console.warn("Countdown timer elements not found");
+            return;
+        }
+
+        // Start the countdown
+        this.startCountdown();
+
+        // Update immediately
+        this.updateCountdown();
+    }
+
+    /**
+     * Start the countdown timer with 1-second intervals
+     */
+    startCountdown() {
+        this.intervalId = setInterval(() => {
+            this.updateCountdown();
+        }, 1000);
+    }
+
+    /**
+     * Stop the countdown timer
+     */
+    stopCountdown() {
+        if (this.intervalId) {
+            clearInterval(this.intervalId);
+            this.intervalId = null;
+        }
+    }
+
+    /**
+     * Calculate time difference and update display
+     */
+    updateCountdown() {
+        const now = new Date().getTime();
+        const timeDifference = this.targetDate - now;
+
+        // Check if event date has been reached
+        if (timeDifference <= 0) {
+            this.handleEventReached();
+            return;
+        }
+
+        // Calculate time units
+        const timeUnits = this.calculateTimeUnits(timeDifference);
+
+        // Update display with animations
+        this.updateDisplay(timeUnits);
+    }
+
+    /**
+     * Calculate days, hours, minutes, and seconds from milliseconds
+     * @param {number} timeDifference - Time difference in milliseconds
+     * @returns {Object} Object containing days, hours, minutes, seconds
+     */
+    calculateTimeUnits(timeDifference) {
+        const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+            (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor(
+            (timeDifference % (1000 * 60 * 60)) / (1000 * 60)
+        );
+        const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+        return { days, hours, minutes, seconds };
+    }
+
+    /**
+     * Update the display with new time values and animations
+     * @param {Object} timeUnits - Object containing time values
+     */
+    updateDisplay(timeUnits) {
+        const { days, hours, minutes, seconds } = timeUnits;
+
+        // Update each time unit with animation
+        this.updateTimeUnit(this.daysElement, days, "days");
+        this.updateTimeUnit(this.hoursElement, hours, "hours");
+        this.updateTimeUnit(this.minutesElement, minutes, "minutes");
+        this.updateTimeUnit(this.secondsElement, seconds, "seconds");
+
+        // Store current values for next comparison
+        this.previousValues = { days, hours, minutes, seconds };
+    }
+
+    /**
+     * Update individual time unit with animation
+     * @param {Element} element - DOM element to update
+     * @param {number} value - New value to display
+     * @param {string} unit - Time unit name (for previous value tracking)
+     */
+    updateTimeUnit(element, value, unit) {
+        if (!element) return;
+
+        const formattedValue = this.formatTimeValue(value);
+        const previousValue = this.previousValues[unit];
+
+        // Only animate if value has changed
+        if (previousValue !== null && previousValue !== value) {
+            this.animateValueChange(element, formattedValue);
+        } else {
+            element.textContent = formattedValue;
+        }
+    }
+
+    /**
+     * Format time value with leading zero if needed
+     * @param {number} value - Time value to format
+     * @returns {string} Formatted time value
+     */
+    formatTimeValue(value) {
+        return value.toString().padStart(2, "0");
+    }
+
+    /**
+     * Animate value change with smooth transition
+     * @param {Element} element - DOM element to animate
+     * @param {string} newValue - New value to display
+     */
+    animateValueChange(element, newValue) {
+        // Add updating class for animation
+        element.classList.add("updating");
+
+        // Update the value
+        element.textContent = newValue;
+
+        // Remove animation class after animation completes
+        setTimeout(() => {
+            element.classList.remove("updating");
+        }, 300);
+    }
+
+    /**
+     * Handle when the event date is reached
+     */
+    handleEventReached() {
+        if (this.isEventReached) return;
+
+        this.isEventReached = true;
+        this.stopCountdown();
+
+        // Hide countdown display
+        const countdownGrid = document.querySelector(".countdown-grid");
+        if (countdownGrid) {
+            countdownGrid.style.display = "none";
+        }
+
+        // Show event message
+        if (this.messageElement) {
+            this.messageElement.style.display = "block";
+            this.messageElement.setAttribute("aria-live", "assertive");
+        }
+
+        // Update countdown title
+        const countdownTitle = document.querySelector(".countdown-title");
+        if (countdownTitle) {
+            countdownTitle.textContent = "Hari Bahagia Telah Tiba!";
+        }
+
+        // Optional: Trigger celebration animation
+        this.triggerCelebration();
+    }
+
+    /**
+     * Trigger celebration effects when event is reached
+     */
+    triggerCelebration() {
+        // Add celebration class to timer container
+        if (this.timerContainer) {
+            this.timerContainer.classList.add("celebration");
+        }
+
+        // You can add more celebration effects here
+        // For example: confetti animation, sound effects, etc.
+        console.log("🎉 Wedding day has arrived! 🎉");
+    }
+
+    /**
+     * Update target date (useful for testing or dynamic events)
+     * @param {Date|string} newDate - New target date
+     */
+    updateTargetDate(newDate) {
+        this.targetDate = new Date(newDate).getTime();
+        this.isEventReached = false;
+
+        // Show countdown elements if they were hidden
+        const countdownGrid = document.querySelector(".countdown-grid");
+        if (countdownGrid) {
+            countdownGrid.style.display = "grid";
+        }
+
+        if (this.messageElement) {
+            this.messageElement.style.display = "none";
+        }
+
+        // Restart countdown if not already running
+        if (!this.intervalId) {
+            this.startCountdown();
+        }
+
+        // Update immediately
+        this.updateCountdown();
+    }
+
+    /**
+     * Get remaining time as object
+     * @returns {Object|null} Remaining time object or null if event reached
+     */
+    getRemainingTime() {
+        if (this.isEventReached) return null;
+
+        const now = new Date().getTime();
+        const timeDifference = this.targetDate - now;
+
+        if (timeDifference <= 0) return null;
+
+        return this.calculateTimeUnits(timeDifference);
+    }
+
+    /**
+     * Destroy the countdown timer and clean up
+     */
+    destroy() {
+        this.stopCountdown();
+
+        // Remove any added classes
+        if (this.timerContainer) {
+            this.timerContainer.classList.remove("celebration");
+        }
+
+        // Reset display elements
+        if (this.daysElement) this.daysElement.textContent = "00";
+        if (this.hoursElement) this.hoursElement.textContent = "00";
+        if (this.minutesElement) this.minutesElement.textContent = "00";
+        if (this.secondsElement) this.secondsElement.textContent = "00";
+
+        if (this.messageElement) {
+            this.messageElement.style.display = "none";
+        }
+    }
+}
