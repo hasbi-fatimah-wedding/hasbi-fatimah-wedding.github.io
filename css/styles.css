@@ -1412,6 +1412,343 @@ select:focus {
     }
 }
 
+/* ===== QURANIC VERSE SECTION STYLES ===== */
+
+.quran-section {
+    padding: var(--spacing-xxl) 0;
+    background: linear-gradient(
+        135deg,
+        var(--cream) 0%,
+        var(--light-cream) 50%,
+        var(--cream) 100%
+    );
+    position: relative;
+    overflow: hidden;
+}
+
+/* Decorative Background Pattern for Quran Section */
+.quran-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(
+            circle at 25% 25%,
+            rgba(218, 165, 32, 0.08) 0%,
+            transparent 50%
+        ),
+        radial-gradient(
+            circle at 75% 75%,
+            rgba(139, 69, 19, 0.05) 0%,
+            transparent 50%
+        );
+    z-index: 1;
+}
+
+.quran-section .container {
+    position: relative;
+    z-index: 2;
+}
+
+.quran-section .section-title {
+    text-align: center;
+    margin-bottom: var(--spacing-xxl);
+    color: var(--primary-brown);
+    font-size: var(--font-size-4xl);
+    font-weight: 700;
+    position: relative;
+}
+
+/* Decorative underline for section title */
+.quran-section .section-title::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--accent), var(--gold));
+    border-radius: 2px;
+}
+
+.quran-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.quran-card {
+    max-width: 900px;
+    width: 100%;
+    background: var(--light-text);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    position: relative;
+    transition: transform var(--transition-normal),
+        box-shadow var(--transition-normal);
+}
+
+.quran-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 40px rgba(47, 27, 20, 0.15);
+}
+
+/* Ornamental Border with Javanese Design Elements */
+.ornamental-border {
+    padding: var(--spacing-xxl);
+    position: relative;
+    background: linear-gradient(
+        145deg,
+        rgba(245, 245, 220, 0.9) 0%,
+        rgba(250, 235, 215, 0.9) 100%
+    );
+}
+
+/* Traditional Javanese Corner Ornaments */
+.ornamental-border::before,
+.ornamental-border::after {
+    content: "";
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(
+        circle,
+        var(--gold) 0%,
+        var(--accent) 70%,
+        transparent 100%
+    );
+    border-radius: 50%;
+    opacity: 0.3;
+}
+
+.ornamental-border::before {
+    top: 20px;
+    left: 20px;
+    background: radial-gradient(
+        circle,
+        var(--gold) 0%,
+        var(--accent) 70%,
+        transparent 100%
+    );
+}
+
+.ornamental-border::after {
+    bottom: 20px;
+    right: 20px;
+    background: radial-gradient(
+        circle,
+        var(--accent) 0%,
+        var(--gold) 70%,
+        transparent 100%
+    );
+}
+
+/* Geometric Pattern Overlay */
+.ornamental-border {
+    background-image: linear-gradient(
+            45deg,
+            transparent 40%,
+            rgba(218, 165, 32, 0.05) 50%,
+            transparent 60%
+        ),
+        linear-gradient(
+            -45deg,
+            transparent 40%,
+            rgba(205, 133, 63, 0.05) 50%,
+            transparent 60%
+        );
+    background-size: 40px 40px;
+}
+
+/* Arabic Text Styling with RTL Support */
+.arabic-text {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    direction: rtl;
+    unicode-bidi: bidi-override;
+}
+
+.arabic-verse {
+    font-family: var(--font-arabic);
+    font-size: var(--font-size-2xl);
+    line-height: 2;
+    color: var(--primary-brown);
+    font-weight: 400;
+    margin-bottom: var(--spacing-lg);
+    text-shadow: 0 1px 2px rgba(47, 27, 20, 0.1);
+    letter-spacing: 0.5px;
+}
+
+.verse-reference {
+    font-family: var(--font-arabic);
+    font-size: var(--font-size-lg);
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+/* Indonesian Translation Styling */
+.translation-text {
+    text-align: center;
+    border-top: 2px solid var(--cream);
+    padding-top: var(--spacing-lg);
+    position: relative;
+}
+
+/* Decorative separator */
+.translation-text::before {
+    content: "❋";
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--light-text);
+    color: var(--gold);
+    font-size: var(--font-size-xl);
+    padding: 0 var(--spacing-sm);
+}
+
+.translation-verse {
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-lg);
+    line-height: 1.8;
+    color: var(--dark-text);
+    font-weight: 400;
+    font-style: italic;
+    margin-bottom: var(--spacing-md);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.translation-reference {
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-base);
+    color: var(--secondary-brown);
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+/* Responsive Typography for Quranic Verse */
+@media (max-width: 767px) {
+    .quran-section {
+        padding: var(--spacing-xl) 0;
+    }
+
+    .quran-section .section-title {
+        font-size: var(--font-size-3xl);
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .ornamental-border {
+        padding: var(--spacing-lg);
+    }
+
+    .arabic-verse {
+        font-size: var(--font-size-xl);
+        line-height: 1.8;
+    }
+
+    .verse-reference {
+        font-size: var(--font-size-base);
+    }
+
+    .translation-verse {
+        font-size: var(--font-size-base);
+        line-height: 1.7;
+    }
+
+    .translation-reference {
+        font-size: var(--font-size-sm);
+    }
+
+    /* Adjust ornamental elements for mobile */
+    .ornamental-border::before,
+    .ornamental-border::after {
+        width: 40px;
+        height: 40px;
+    }
+
+    .ornamental-border::before {
+        top: 15px;
+        left: 15px;
+    }
+
+    .ornamental-border::after {
+        bottom: 15px;
+        right: 15px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .arabic-verse {
+        font-size: calc(var(--font-size-2xl) * 1.1);
+    }
+
+    .translation-verse {
+        font-size: calc(var(--font-size-lg) * 1.05);
+    }
+}
+
+@media (min-width: 1024px) {
+    .quran-section .section-title {
+        font-size: calc(var(--font-size-4xl) * 1.1);
+    }
+
+    .arabic-verse {
+        font-size: calc(var(--font-size-2xl) * 1.2);
+        line-height: 2.2;
+    }
+
+    .translation-verse {
+        font-size: calc(var(--font-size-lg) * 1.1);
+        line-height: 1.9;
+    }
+}
+
+/* Enhanced RTL Support for Arabic Text */
+.arabic-text * {
+    direction: rtl;
+    text-align: center;
+}
+
+/* Ensure proper Arabic text rendering */
+.arabic-verse,
+.verse-reference {
+    font-feature-settings: "liga" 1, "dlig" 1, "kern" 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Accessibility enhancements */
+.quran-section [lang="ar"] {
+    font-synthesis: none;
+    -webkit-locale: "ar";
+}
+
+/* Print styles for Quranic verse */
+@media print {
+    .quran-section {
+        background: white;
+        color: black;
+    }
+
+    .quran-card {
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+
+    .ornamental-border::before,
+    .ornamental-border::after {
+        display: none;
+    }
+}
+
 /* ===== HERO SECTION STYLES ===== */
 
 .hero-section {
@@ -2002,5 +2339,342 @@ select:focus {
     to {
         opacity: 1;
         transform: translateY(0) scale(1);
+    }
+}
+
+/* ===== QURANIC VERSE SECTION STYLES ===== */
+
+.quran-section {
+    padding: var(--spacing-xxl) 0;
+    background: linear-gradient(
+        135deg,
+        var(--cream) 0%,
+        var(--light-cream) 50%,
+        var(--cream) 100%
+    );
+    position: relative;
+    overflow: hidden;
+}
+
+/* Decorative Background Pattern for Quran Section */
+.quran-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(
+            circle at 25% 25%,
+            rgba(218, 165, 32, 0.08) 0%,
+            transparent 50%
+        ),
+        radial-gradient(
+            circle at 75% 75%,
+            rgba(139, 69, 19, 0.05) 0%,
+            transparent 50%
+        );
+    z-index: 1;
+}
+
+.quran-section .container {
+    position: relative;
+    z-index: 2;
+}
+
+.quran-section .section-title {
+    text-align: center;
+    margin-bottom: var(--spacing-xxl);
+    color: var(--primary-brown);
+    font-size: var(--font-size-4xl);
+    font-weight: 700;
+    position: relative;
+}
+
+/* Decorative underline for section title */
+.quran-section .section-title::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--accent), var(--gold));
+    border-radius: 2px;
+}
+
+.quran-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.quran-card {
+    max-width: 900px;
+    width: 100%;
+    background: var(--light-text);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    position: relative;
+    transition: transform var(--transition-normal),
+        box-shadow var(--transition-normal);
+}
+
+.quran-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 40px rgba(47, 27, 20, 0.15);
+}
+
+/* Ornamental Border with Javanese Design Elements */
+.ornamental-border {
+    padding: var(--spacing-xxl);
+    position: relative;
+    background: linear-gradient(
+        145deg,
+        rgba(245, 245, 220, 0.9) 0%,
+        rgba(250, 235, 215, 0.9) 100%
+    );
+}
+
+/* Traditional Javanese Corner Ornaments */
+.ornamental-border::before,
+.ornamental-border::after {
+    content: "";
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(
+        circle,
+        var(--gold) 0%,
+        var(--accent) 70%,
+        transparent 100%
+    );
+    border-radius: 50%;
+    opacity: 0.3;
+}
+
+.ornamental-border::before {
+    top: 20px;
+    left: 20px;
+    background: radial-gradient(
+        circle,
+        var(--gold) 0%,
+        var(--accent) 70%,
+        transparent 100%
+    );
+}
+
+.ornamental-border::after {
+    bottom: 20px;
+    right: 20px;
+    background: radial-gradient(
+        circle,
+        var(--accent) 0%,
+        var(--gold) 70%,
+        transparent 100%
+    );
+}
+
+/* Geometric Pattern Overlay */
+.ornamental-border {
+    background-image: linear-gradient(
+            45deg,
+            transparent 40%,
+            rgba(218, 165, 32, 0.05) 50%,
+            transparent 60%
+        ),
+        linear-gradient(
+            -45deg,
+            transparent 40%,
+            rgba(205, 133, 63, 0.05) 50%,
+            transparent 60%
+        );
+    background-size: 40px 40px;
+}
+
+/* Arabic Text Styling with RTL Support */
+.arabic-text {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    direction: rtl;
+    unicode-bidi: bidi-override;
+}
+
+.arabic-verse {
+    font-family: var(--font-arabic);
+    font-size: var(--font-size-2xl);
+    line-height: 2;
+    color: var(--primary-brown);
+    font-weight: 400;
+    margin-bottom: var(--spacing-lg);
+    text-shadow: 0 1px 2px rgba(47, 27, 20, 0.1);
+    letter-spacing: 0.5px;
+}
+
+.verse-reference {
+    font-family: var(--font-arabic);
+    font-size: var(--font-size-lg);
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+/* Indonesian Translation Styling */
+.translation-text {
+    text-align: center;
+    border-top: 2px solid var(--cream);
+    padding-top: var(--spacing-lg);
+    position: relative;
+}
+
+/* Decorative separator */
+.translation-text::before {
+    content: "❋";
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--light-text);
+    color: var(--gold);
+    font-size: var(--font-size-xl);
+    padding: 0 var(--spacing-sm);
+}
+
+.translation-verse {
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-lg);
+    line-height: 1.8;
+    color: var(--dark-text);
+    font-weight: 400;
+    font-style: italic;
+    margin-bottom: var(--spacing-md);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.translation-reference {
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-base);
+    color: var(--secondary-brown);
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+/* Responsive Typography for Quranic Verse */
+@media (max-width: 767px) {
+    .quran-section {
+        padding: var(--spacing-xl) 0;
+    }
+
+    .quran-section .section-title {
+        font-size: var(--font-size-3xl);
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .ornamental-border {
+        padding: var(--spacing-lg);
+    }
+
+    .arabic-verse {
+        font-size: var(--font-size-xl);
+        line-height: 1.8;
+    }
+
+    .verse-reference {
+        font-size: var(--font-size-base);
+    }
+
+    .translation-verse {
+        font-size: var(--font-size-base);
+        line-height: 1.7;
+    }
+
+    .translation-reference {
+        font-size: var(--font-size-sm);
+    }
+
+    /* Adjust ornamental elements for mobile */
+    .ornamental-border::before,
+    .ornamental-border::after {
+        width: 40px;
+        height: 40px;
+    }
+
+    .ornamental-border::before {
+        top: 15px;
+        left: 15px;
+    }
+
+    .ornamental-border::after {
+        bottom: 15px;
+        right: 15px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .arabic-verse {
+        font-size: calc(var(--font-size-2xl) * 1.1);
+    }
+
+    .translation-verse {
+        font-size: calc(var(--font-size-lg) * 1.05);
+    }
+}
+
+@media (min-width: 1024px) {
+    .quran-section .section-title {
+        font-size: calc(var(--font-size-4xl) * 1.1);
+    }
+
+    .arabic-verse {
+        font-size: calc(var(--font-size-2xl) * 1.2);
+        line-height: 2.2;
+    }
+
+    .translation-verse {
+        font-size: calc(var(--font-size-lg) * 1.1);
+        line-height: 1.9;
+    }
+}
+
+/* Enhanced RTL Support for Arabic Text */
+.arabic-text * {
+    direction: rtl;
+    text-align: center;
+}
+
+/* Ensure proper Arabic text rendering */
+.arabic-verse,
+.verse-reference {
+    font-feature-settings: "liga" 1, "dlig" 1, "kern" 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Accessibility enhancements */
+.quran-section [lang="ar"] {
+    font-synthesis: none;
+    -webkit-locale: "ar";
+}
+
+/* Print styles for Quranic verse */
+@media print {
+    .quran-section {
+        background: white;
+        color: black;
+    }
+
+    .quran-card {
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+
+    .ornamental-border::before,
+    .ornamental-border::after {
+        display: none;
     }
 }
