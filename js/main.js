@@ -911,12 +911,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initialize timeline controllers
     const timelineAnimation = new TimelineAnimationController();
     const timelineInteraction = new TimelineInteractionController();
+    const timelineImages = new TimelineImageController();
 
     // Make controllers globally accessible for debugging/testing
     window.countdownTimer = countdownTimer;
     window.locationMap = locationMap;
     window.timelineAnimation = timelineAnimation;
     window.timelineInteraction = timelineInteraction;
+    window.timelineImages = timelineImages;
 
     // Handle window resize for mobile menu
     window.addEventListener("resize", () => {
@@ -942,6 +944,18 @@ document.addEventListener("DOMContentLoaded", () => {
             // Reset timeline animations
             timelineAnimation.resetAnimations();
             console.log("Timeline animations reset");
+        }
+
+        if (e.ctrlKey && e.shiftKey && e.key === "I") {
+            // Show image loading statistics
+            const stats = timelineImages.getLoadingStats();
+            console.log("Image loading statistics:", stats);
+        }
+
+        if (e.ctrlKey && e.shiftKey && e.key === "F") {
+            // Refresh failed images
+            timelineImages.refreshImages();
+            console.log("Refreshing failed images");
         }
     });
 });
@@ -1366,6 +1380,351 @@ if (!document.querySelector("#timeline-animation-styles")) {
                 opacity: 1;
                 transform: translateX(0);
             }
+        }
+    `;
+    document.head.appendChild(style);
+}
+// ===== TIMELINE IMAGE FUNCTIONALITY =====
+
+/**
+ * Timeline Image Controller
+ * Handles image loading, error handling, and interactive features
+ */
+class TimelineImageController {
+    constructor() {
+        this.storyImages = document.querySelectorAll(".story-photo");
+        this.imageOverlays = document.querySelectorAll(".image-overlay");
+
+        this.init();
+    }
+
+    init() {
+        this.setupImageLoading();
+        this.setupImageErrorHandling();
+        this.setupImageInteractions();
+        this.setupLazyLoading();
+    }
+
+    /**
+     * Setup image loading animations
+     */
+    setupImageLoading() {
+        this.storyImages.forEach((img) => {
+            // Add loading class initially
+            img.classList.add("loading");
+
+            // Handle successful image load
+            img.addEventListener("load", () => {
+                img.classList.remove("loading");
+                img.classList.add("loaded");
+                this.animateImageEntry(img);
+            });
+
+            // Handle image load error
+            img.addEventListener("error", () => {
+                this.handleImageError(img);
+            });
+        });
+    }
+
+    /**
+     * Setup image error handling
+     */
+    setupImageErrorHandling() {
+        this.storyImages.forEach((img) => {
+            img.addEventListener("error", () => {
+                this.handleImageError(img);
+            });
+        });
+    }
+
+    /**
+     * Handle image loading errors
+     * @param {Element} img - Image element that failed to load
+     */
+    handleImageError(img) {
+        img.classList.add("error");
+        img.classList.remove("loading");
+
+        // Create fallback placeholder
+        const placeholder = this.createImagePlaceholder(img);
+        img.parentNode.insertBefore(placeholder, img);
+        img.style.display = "none";
+
+        console.warn(`Failed to load timeline image: ${img.src}`);
+    }
+
+    /**
+     * Create placeholder for failed images
+     * @param {Element} originalImg - Original image element
+     * @returns {Element} Placeholder element
+     */
+    createImagePlaceholder(originalImg) {
+        const placeholder = document.createElement("div");
+        placeholder.className = "story-photo-placeholder";
+        placeholder.style.cssText = `
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--light-cream) 50%, var(--cream) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-md);
+            color: var(--dark-text);
+            font-family: var(--font-secondary);
+        `;
+
+        const icon = document.createElement("div");
+        icon.innerHTML = "📷";
+        icon.style.cssText = `
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.6;
+        `;
+
+        const text = document.createElement("div");
+        text.textContent = "Gambar tidak dapat dimuat";
+        text.style.cssText = `
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            text-align: center;
+            opacity: 0.8;
+        `;
+
+        placeholder.appendChild(icon);
+        placeholder.appendChild(text);
+
+        return placeholder;
+    }
+
+    /**
+     * Animate image entry when loaded
+     * @param {Element} img - Image element to animate
+     */
+    animateImageEntry(img) {
+        img.style.opacity = "0";
+        img.style.transform = "scale(0.9)";
+
+        // Trigger animation after a short delay
+        setTimeout(() => {
+            img.style.transition =
+                "opacity 0.6s ease-out, transform 0.6s ease-out";
+            img.style.opacity = "1";
+            img.style.transform = "scale(1)";
+        }, 100);
+    }
+
+    /**
+     * Setup interactive features for images
+     */
+    setupImageInteractions() {
+        this.storyImages.forEach((img, index) => {
+            const container = img.closest(".timeline-image");
+            if (!container) return;
+
+            // Add click handler for image expansion (optional)
+            container.addEventListener("click", (e) => {
+                this.handleImageClick(img, e);
+            });
+
+            // Add keyboard support
+            container.setAttribute("tabindex", "0");
+            container.setAttribute("role", "button");
+            container.setAttribute(
+                "aria-label",
+                `View story image ${index + 1}`
+            );
+
+            container.addEventListener("keydown", (e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    this.handleImageClick(img, e);
+                }
+            });
+        });
+    }
+
+    /**
+     * Handle image click interactions
+     * @param {Element} img - Clicked image element
+     * @param {Event} e - Click event
+     */
+    handleImageClick(img, e) {
+        // Add click effect
+        const container = img.closest(".timeline-image");
+        if (container) {
+            container.style.transform = "scale(0.98)";
+            setTimeout(() => {
+                container.style.transform = "";
+            }, 150);
+        }
+
+        // Optional: Open image in modal or lightbox
+        // this.openImageModal(img);
+
+        // For now, just log the interaction
+        console.log("Timeline image clicked:", img.alt);
+    }
+
+    /**
+     * Setup lazy loading for images
+     */
+    setupLazyLoading() {
+        // Use Intersection Observer for lazy loading if supported
+        if ("IntersectionObserver" in window) {
+            const imageObserver = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            this.loadImage(img);
+                            imageObserver.unobserve(img);
+                        }
+                    });
+                },
+                {
+                    rootMargin: "50px 0px",
+                    threshold: 0.1,
+                }
+            );
+
+            this.storyImages.forEach((img) => {
+                if (img.getAttribute("loading") === "lazy") {
+                    imageObserver.observe(img);
+                }
+            });
+        }
+    }
+
+    /**
+     * Load image with proper handling
+     * @param {Element} img - Image element to load
+     */
+    loadImage(img) {
+        if (img.src && !img.classList.contains("loaded")) {
+            // Image will load automatically, just add loading class
+            img.classList.add("loading");
+        }
+    }
+
+    /**
+     * Preload all timeline images for better performance
+     */
+    preloadImages() {
+        const imageUrls = Array.from(this.storyImages).map((img) => img.src);
+
+        imageUrls.forEach((url) => {
+            if (url) {
+                const preloadImg = new Image();
+                preloadImg.src = url;
+            }
+        });
+    }
+
+    /**
+     * Get image loading statistics
+     * @returns {Object} Loading statistics
+     */
+    getLoadingStats() {
+        const total = this.storyImages.length;
+        const loaded = document.querySelectorAll(".story-photo.loaded").length;
+        const errors = document.querySelectorAll(".story-photo.error").length;
+        const loading = document.querySelectorAll(
+            ".story-photo.loading"
+        ).length;
+
+        return {
+            total,
+            loaded,
+            errors,
+            loading,
+            percentage: total > 0 ? Math.round((loaded / total) * 100) : 0,
+        };
+    }
+
+    /**
+     * Refresh all images (useful for retrying failed loads)
+     */
+    refreshImages() {
+        this.storyImages.forEach((img) => {
+            if (img.classList.contains("error")) {
+                img.classList.remove("error");
+                img.classList.add("loading");
+                img.style.display = "";
+
+                // Remove placeholder if exists
+                const placeholder = img.parentNode.querySelector(
+                    ".story-photo-placeholder"
+                );
+                if (placeholder) {
+                    placeholder.remove();
+                }
+
+                // Reload image
+                const src = img.src;
+                img.src = "";
+                img.src = src;
+            }
+        });
+    }
+}
+
+// Add image loading styles
+if (!document.querySelector("#timeline-image-styles")) {
+    const style = document.createElement("style");
+    style.id = "timeline-image-styles";
+    style.textContent = `
+        .story-photo.loading {
+            opacity: 0.7;
+            background: linear-gradient(90deg, var(--cream) 25%, var(--light-cream) 50%, var(--cream) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        .story-photo.loaded {
+            opacity: 1;
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .story-photo.error {
+            display: none;
+        }
+
+        .story-photo-placeholder {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Enhanced hover effects for loaded images */
+        .timeline-image:hover .story-photo.loaded {
+            transform: scale(1.05);
+        }
+
+        /* Focus styles for keyboard navigation */
+        .timeline-image:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: var(--radius-md);
         }
     `;
     document.head.appendChild(style);
