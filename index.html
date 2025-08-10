@@ -818,7 +818,30 @@
                         Galeri Foto
                     </h2>
                     <div class="photo-gallery">
-                        <!-- Photo gallery will be implemented in later tasks -->
+                        <div
+                            class="gallery-grid"
+                            role="list"
+                            aria-label="Galeri foto pernikahan"
+                        >
+                            <div
+                                class="gallery-item"
+                                role="listitem"
+                                data-aos="fade-up"
+                            >
+                                <a
+                                    href="assets/images/gallery/photo1.jpg"
+                                    class="glightbox photo-card"
+                                    data-gallery="wedding-gallery"
+                                >
+                                    <img
+                                        class="gallery-image"
+                                        src="assets/images/gallery/photo1.jpg"
+                                        alt="Foto Pernikahan"
+                                        loading="lazy"
+                                    />
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -866,18 +889,15 @@
             <!-- Audio controls will be implemented in later tasks -->
         </div>
 
-        <!-- Modal for Photo Gallery -->
-        <div
-            id="photo-modal"
-            class="modal"
-            role="dialog"
-            aria-modal="true"
-            aria-hidden="true"
-        >
-            <!-- Modal content will be implemented in later tasks -->
-        </div>
+        <!-- GLightbox CSS and JS -->
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css"
+        />
 
         <!-- JavaScript Files -->
         <script src="js/main.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+        <script src="js/gallery-simple.js"></script>
     </body>
 </html>

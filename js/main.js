@@ -946,11 +946,7 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log("Timeline animations reset");
         }
 
-        if (e.ctrlKey && e.shiftKey && e.key === "I") {
-            // Show image loading statistics
-            const stats = timelineImages.getLoadingStats();
-            console.log("Image loading statistics:", stats);
-        }
+        // Removed image loading statistics shortcut as it's no longer needed
 
         if (e.ctrlKey && e.shiftKey && e.key === "F") {
             // Refresh failed images
