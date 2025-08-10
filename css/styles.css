@@ -5186,3 +5186,478 @@ select:focus {
     font-family: var(--font-primary);
     font-weight: 600;
 }
+/* ===================================
+   RSVP Section Styles
+   =================================== */
+
+.rsvp-section {
+    padding: var(--spacing-xxl) 0;
+    background: linear-gradient(
+        135deg,
+        var(--light-cream) 0%,
+        var(--cream) 100%
+    );
+    position: relative;
+}
+
+.rsvp-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23cd853f' fill-opacity='0.03'%3E%3Cpath d='M30 30c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20zm0 0c0 11.046 8.954 20 20 20s20-8.954 20-20-8.954-20-20-20-20 8.954-20 20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.rsvp-content {
+    position: relative;
+    z-index: 1;
+}
+
+.rsvp-intro {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.rsvp-description {
+    font-size: var(--font-size-lg);
+    color: var(--dark-text);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+.rsvp-form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: var(--light-text);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-lg);
+    border: 2px solid var(--gold);
+    position: relative;
+}
+
+.rsvp-form-container::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(
+        45deg,
+        var(--gold),
+        var(--accent),
+        var(--primary-brown)
+    );
+    border-radius: var(--radius-lg);
+    z-index: -1;
+    opacity: 0.1;
+}
+
+/* Form Group Styles */
+.form-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.form-label {
+    display: block;
+    font-family: var(--font-primary);
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    color: var(--dark-text);
+    margin-bottom: var(--spacing-xs);
+    line-height: 1.4;
+}
+
+.required {
+    color: #dc2626;
+    font-weight: 700;
+}
+
+.form-hint {
+    font-size: var(--font-size-sm);
+    color: var(--secondary-brown);
+    font-weight: 400;
+    display: block;
+    margin-top: 2px;
+}
+
+/* Input Styles */
+.form-input,
+.form-select,
+.form-textarea {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 2px solid #e5e7eb;
+    border-radius: var(--radius-md);
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-base);
+    color: var(--dark-text);
+    background-color: var(--light-text);
+    transition: var(--transition-normal);
+    outline: none;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(218, 165, 32, 0.1);
+}
+
+.form-input:hover,
+.form-select:hover,
+.form-textarea:hover {
+    border-color: var(--accent);
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+    color: #9ca3af;
+    opacity: 1;
+}
+
+/* Textarea specific styles */
+.form-textarea {
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.6;
+}
+
+/* Select specific styles */
+.form-select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right var(--spacing-sm) center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+    appearance: none;
+}
+
+/* Fieldset and Legend Styles */
+.form-fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.form-legend {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    color: var(--dark-text);
+    margin-bottom: var(--spacing-sm);
+    padding: 0;
+}
+
+/* Radio Button Styles */
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.radio-item {
+    position: relative;
+}
+
+.radio-input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 2px solid #e5e7eb;
+    border-radius: var(--radius-md);
+    transition: var(--transition-normal);
+    background-color: var(--light-text);
+}
+
+.radio-label:hover {
+    border-color: var(--accent);
+    background-color: rgba(218, 165, 32, 0.05);
+}
+
+.radio-input:checked + .radio-label {
+    border-color: var(--gold);
+    background-color: rgba(218, 165, 32, 0.1);
+}
+
+.radio-input:focus + .radio-label {
+    box-shadow: 0 0 0 3px rgba(218, 165, 32, 0.1);
+}
+
+.radio-custom {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #d1d5db;
+    border-radius: 50%;
+    margin-right: var(--spacing-sm);
+    position: relative;
+    transition: var(--transition-normal);
+    flex-shrink: 0;
+}
+
+.radio-input:checked + .radio-label .radio-custom {
+    border-color: var(--gold);
+    background-color: var(--gold);
+}
+
+.radio-input:checked + .radio-label .radio-custom::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--light-text);
+}
+
+.radio-text {
+    font-size: var(--font-size-base);
+    color: var(--dark-text);
+    line-height: 1.4;
+}
+
+/* Form Footer */
+.form-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--spacing-xs);
+}
+
+.character-counter {
+    font-size: var(--font-size-sm);
+    color: var(--secondary-brown);
+}
+
+/* Button Styles */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border: none;
+    border-radius: var(--radius-md);
+    font-family: var(--font-primary);
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: var(--transition-normal);
+    outline: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn:focus {
+    box-shadow: 0 0 0 3px rgba(218, 165, 32, 0.3);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--accent) 100%);
+    color: var(--light-text);
+    border: 2px solid transparent;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(
+        135deg,
+        var(--accent) 0%,
+        var(--primary-brown) 100%
+    );
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--primary-brown);
+    border: 2px solid var(--primary-brown);
+}
+
+.btn-secondary:hover {
+    background: var(--primary-brown);
+    color: var(--light-text);
+}
+
+.btn-submit {
+    width: 100%;
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: var(--font-size-lg);
+    margin-top: var(--spacing-sm);
+}
+
+.btn-loading {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.loading-spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Form Actions */
+.form-actions {
+    margin-top: var(--spacing-xl);
+}
+
+/* Error Message Styles */
+.error-message {
+    color: #dc2626;
+    font-size: var(--font-size-sm);
+    margin-top: var(--spacing-xs);
+    display: block;
+    line-height: 1.4;
+}
+
+.error-message:empty {
+    display: none;
+}
+
+/* Form Status */
+.form-status {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    text-align: center;
+}
+
+.form-status.success {
+    background-color: #dcfce7;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
+
+.form-status.error {
+    background-color: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+}
+
+/* Success Message Styles */
+.rsvp-success {
+    text-align: center;
+    padding: var(--spacing-xl);
+    background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+    border-radius: var(--radius-lg);
+    border: 2px solid #22c55e;
+}
+
+.success-icon {
+    margin-bottom: var(--spacing-md);
+}
+
+.success-title {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-2xl);
+    color: var(--primary-brown);
+    margin-bottom: var(--spacing-sm);
+}
+
+.success-message {
+    font-size: var(--font-size-base);
+    color: var(--dark-text);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-lg);
+}
+
+/* Input Validation States */
+.form-input.error,
+.form-select.error,
+.form-textarea.error {
+    border-color: #dc2626;
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+.form-input.success,
+.form-select.success,
+.form-textarea.success {
+    border-color: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+}
+
+.radio-input.error + .radio-label {
+    border-color: #dc2626;
+}
+
+/* Guest Count Group - Initially Hidden */
+#guest-count-group {
+    display: none;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all var(--transition-normal);
+}
+
+#guest-count-group.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .rsvp-form-container {
+        margin: 0 var(--spacing-sm);
+        padding: var(--spacing-lg);
+    }
+
+    .radio-group {
+        gap: var(--spacing-xs);
+    }
+
+    .radio-label {
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+
+    .btn-submit {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: var(--font-size-base);
+    }
+}
+
+@media (max-width: 480px) {
+    .rsvp-section {
+        padding: var(--spacing-xl) 0;
+    }
+
+    .rsvp-form-container {
+        margin: 0 var(--spacing-xs);
+        padding: var(--spacing-md);
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+}

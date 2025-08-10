@@ -856,7 +856,336 @@
                         Konfirmasi Kehadiran
                     </h2>
                     <div class="rsvp-content">
-                        <!-- RSVP form will be implemented in later tasks -->
+                        <div class="rsvp-intro">
+                            <p class="rsvp-description">
+                                Kehadiran Anda adalah kebahagiaan terbesar bagi
+                                kami. Mohon konfirmasi kehadiran Anda melalui
+                                form di bawah ini.
+                            </p>
+                        </div>
+
+                        <div class="rsvp-form-container">
+                            <form
+                                id="rsvp-form"
+                                class="rsvp-form"
+                                novalidate
+                                aria-labelledby="rsvp-title"
+                                role="form"
+                            >
+                                <!-- Name Field -->
+                                <div class="form-group">
+                                    <label for="rsvp-name" class="form-label">
+                                        Nama Lengkap
+                                        <span
+                                            class="required"
+                                            aria-label="wajib diisi"
+                                            >*</span
+                                        >
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="rsvp-name"
+                                        name="name"
+                                        class="form-input"
+                                        placeholder="Masukkan nama lengkap Anda"
+                                        required
+                                        aria-required="true"
+                                        aria-describedby="name-error"
+                                        autocomplete="name"
+                                    />
+                                    <div
+                                        id="name-error"
+                                        class="error-message"
+                                        role="alert"
+                                        aria-live="polite"
+                                    ></div>
+                                </div>
+
+                                <!-- Email Field -->
+                                <div class="form-group">
+                                    <label for="rsvp-email" class="form-label">
+                                        Email
+                                        <span
+                                            class="required"
+                                            aria-label="wajib diisi"
+                                            >*</span
+                                        >
+                                    </label>
+                                    <input
+                                        type="email"
+                                        id="rsvp-email"
+                                        name="email"
+                                        class="form-input"
+                                        placeholder="contoh@email.com"
+                                        required
+                                        aria-required="true"
+                                        aria-describedby="email-error"
+                                        autocomplete="email"
+                                    />
+                                    <div
+                                        id="email-error"
+                                        class="error-message"
+                                        role="alert"
+                                        aria-live="polite"
+                                    ></div>
+                                </div>
+
+                                <!-- Attendance Field -->
+                                <div class="form-group">
+                                    <fieldset class="form-fieldset">
+                                        <legend class="form-legend">
+                                            Konfirmasi Kehadiran
+                                            <span
+                                                class="required"
+                                                aria-label="wajib diisi"
+                                                >*</span
+                                            >
+                                        </legend>
+                                        <div
+                                            class="radio-group"
+                                            role="radiogroup"
+                                            aria-required="true"
+                                            aria-describedby="attendance-error"
+                                        >
+                                            <div class="radio-item">
+                                                <input
+                                                    type="radio"
+                                                    id="attendance-yes"
+                                                    name="attendance"
+                                                    value="yes"
+                                                    class="radio-input"
+                                                    required
+                                                />
+                                                <label
+                                                    for="attendance-yes"
+                                                    class="radio-label"
+                                                >
+                                                    <span
+                                                        class="radio-custom"
+                                                    ></span>
+                                                    <span class="radio-text"
+                                                        >Ya, saya akan
+                                                        hadir</span
+                                                    >
+                                                </label>
+                                            </div>
+                                            <div class="radio-item">
+                                                <input
+                                                    type="radio"
+                                                    id="attendance-no"
+                                                    name="attendance"
+                                                    value="no"
+                                                    class="radio-input"
+                                                    required
+                                                />
+                                                <label
+                                                    for="attendance-no"
+                                                    class="radio-label"
+                                                >
+                                                    <span
+                                                        class="radio-custom"
+                                                    ></span>
+                                                    <span class="radio-text"
+                                                        >Maaf, saya tidak dapat
+                                                        hadir</span
+                                                    >
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div
+                                            id="attendance-error"
+                                            class="error-message"
+                                            role="alert"
+                                            aria-live="polite"
+                                        ></div>
+                                    </fieldset>
+                                </div>
+
+                                <!-- Guest Count Field -->
+                                <div class="form-group" id="guest-count-group">
+                                    <label for="rsvp-guests" class="form-label">
+                                        Jumlah Tamu yang Dibawa
+                                        <span class="form-hint"
+                                            >(termasuk Anda sendiri)</span
+                                        >
+                                    </label>
+                                    <select
+                                        id="rsvp-guests"
+                                        name="guestCount"
+                                        class="form-select"
+                                        aria-describedby="guests-error guests-hint"
+                                    >
+                                        <option value="1">
+                                            1 orang (hanya saya)
+                                        </option>
+                                        <option value="2">2 orang</option>
+                                        <option value="3">3 orang</option>
+                                        <option value="4">4 orang</option>
+                                        <option value="5">5 orang</option>
+                                        <option value="6">
+                                            6 orang atau lebih
+                                        </option>
+                                    </select>
+                                    <div id="guests-hint" class="form-hint">
+                                        Informasi ini membantu kami
+                                        mempersiapkan tempat duduk dan konsumsi
+                                    </div>
+                                    <div
+                                        id="guests-error"
+                                        class="error-message"
+                                        role="alert"
+                                        aria-live="polite"
+                                    ></div>
+                                </div>
+
+                                <!-- Message Field -->
+                                <div class="form-group">
+                                    <label
+                                        for="rsvp-message"
+                                        class="form-label"
+                                    >
+                                        Pesan untuk Mempelai
+                                        <span class="form-hint"
+                                            >(opsional)</span
+                                        >
+                                    </label>
+                                    <textarea
+                                        id="rsvp-message"
+                                        name="message"
+                                        class="form-textarea"
+                                        placeholder="Tuliskan ucapan atau doa terbaik untuk kami..."
+                                        rows="4"
+                                        maxlength="500"
+                                        aria-describedby="message-counter message-error"
+                                    ></textarea>
+                                    <div class="form-footer">
+                                        <div
+                                            id="message-counter"
+                                            class="character-counter"
+                                        >
+                                            <span id="message-count">0</span
+                                            >/500 karakter
+                                        </div>
+                                    </div>
+                                    <div
+                                        id="message-error"
+                                        class="error-message"
+                                        role="alert"
+                                        aria-live="polite"
+                                    ></div>
+                                </div>
+
+                                <!-- Submit Button -->
+                                <div class="form-actions">
+                                    <button
+                                        type="submit"
+                                        class="btn btn-primary btn-submit"
+                                        id="rsvp-submit"
+                                        aria-describedby="submit-status"
+                                    >
+                                        <span class="btn-text"
+                                            >Kirim Konfirmasi</span
+                                        >
+                                        <span
+                                            class="btn-loading"
+                                            style="display: none"
+                                        >
+                                            <svg
+                                                class="loading-spinner"
+                                                width="20"
+                                                height="20"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                aria-hidden="true"
+                                            >
+                                                <circle
+                                                    cx="12"
+                                                    cy="12"
+                                                    r="10"
+                                                    stroke="currentColor"
+                                                    stroke-width="4"
+                                                    stroke-linecap="round"
+                                                    stroke-dasharray="31.416"
+                                                    stroke-dashoffset="31.416"
+                                                >
+                                                    <animate
+                                                        attributeName="stroke-dasharray"
+                                                        dur="2s"
+                                                        values="0 31.416;15.708 15.708;0 31.416"
+                                                        repeatCount="indefinite"
+                                                    />
+                                                    <animate
+                                                        attributeName="stroke-dashoffset"
+                                                        dur="2s"
+                                                        values="0;-15.708;-31.416"
+                                                        repeatCount="indefinite"
+                                                    />
+                                                </circle>
+                                            </svg>
+                                            Mengirim...
+                                        </span>
+                                    </button>
+                                </div>
+
+                                <!-- Status Messages -->
+                                <div
+                                    id="submit-status"
+                                    class="form-status"
+                                    role="status"
+                                    aria-live="polite"
+                                ></div>
+                            </form>
+
+                            <!-- Success Message (initially hidden) -->
+                            <div
+                                id="rsvp-success"
+                                class="rsvp-success"
+                                style="display: none"
+                                role="alert"
+                                aria-live="assertive"
+                            >
+                                <div class="success-icon">
+                                    <svg
+                                        width="48"
+                                        height="48"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        aria-hidden="true"
+                                    >
+                                        <circle
+                                            cx="12"
+                                            cy="12"
+                                            r="10"
+                                            fill="var(--gold)"
+                                            stroke="var(--primary-brown)"
+                                            stroke-width="2"
+                                        />
+                                        <path
+                                            d="M9 12l2 2 4-4"
+                                            stroke="white"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+                                    </svg>
+                                </div>
+                                <h3 class="success-title">Terima Kasih!</h3>
+                                <p class="success-message">
+                                    Konfirmasi kehadiran Anda telah berhasil
+                                    dikirim. Kami sangat menantikan kehadiran
+                                    Anda di hari bahagia kami.
+                                </p>
+                                <button
+                                    type="button"
+                                    class="btn btn-secondary"
+                                    onclick="resetRSVPForm()"
+                                >
+                                    Kirim Konfirmasi Lain
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -904,6 +1233,7 @@
         <script src="js/main.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
         <script src="js/gallery-simple.js"></script>
+        <script src="js/rsvp.js"></script>
 
         <!-- AOS (Animate On Scroll) JS -->
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
