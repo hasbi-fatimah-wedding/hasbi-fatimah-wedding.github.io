@@ -332,7 +332,6 @@ class CountdownTimer {
             !this.minutesElement ||
             !this.secondsElement
         ) {
-            console.warn("Countdown timer elements not found");
             return;
         }
 
@@ -506,11 +505,10 @@ class CountdownTimer {
 
         // You can add more celebration effects here
         // For example: confetti animation, sound effects, etc.
-        console.log("🎉 Wedding day has arrived! 🎉");
     }
 
     /**
-     * Update target date (useful for testing or dynamic events)
+     * Update target date
      * @param {Date|string} newDate - New target date
      */
     updateTargetDate(newDate) {
@@ -718,8 +716,6 @@ class LocationMapController {
 
             return true;
         } catch (error) {
-            console.warn("Failed to copy address to clipboard:", error);
-
             // Fallback for older browsers
             this.fallbackCopyToClipboard(this.venueAddress);
 
@@ -745,7 +741,6 @@ class LocationMapController {
             document.execCommand("copy");
             this.showCopyFeedback(true);
         } catch (error) {
-            console.error("Fallback copy failed:", error);
             this.showCopyFeedback(false);
         }
 
@@ -811,8 +806,6 @@ class LocationMapController {
     trackMapInteraction(action) {
         // This is where you would integrate with your analytics service
         // For example: Google Analytics, Facebook Pixel, etc.
-
-        console.log(`Map interaction: ${action}`);
 
         // Example Google Analytics tracking (if gtag is available)
         if (typeof gtag !== "undefined") {
@@ -913,46 +906,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const timelineInteraction = new TimelineInteractionController();
     const timelineImages = new TimelineImageController();
 
-    // Make controllers globally accessible for debugging/testing
-    window.countdownTimer = countdownTimer;
-    window.locationMap = locationMap;
-    window.timelineAnimation = timelineAnimation;
-    window.timelineInteraction = timelineInteraction;
-    window.timelineImages = timelineImages;
-
     // Handle window resize for mobile menu
     window.addEventListener("resize", () => {
         mobileNavigation.handleResize();
-    });
-
-    // Optional: Add keyboard shortcuts for testing
-    document.addEventListener("keydown", (e) => {
-        if (e.ctrlKey && e.shiftKey && e.key === "T") {
-            // Set target date to 10 seconds from now for testing
-            const testDate = new Date(Date.now() + 10000);
-            countdownTimer.updateTargetDate(testDate);
-            console.log("Countdown set to 10 seconds for testing");
-        }
-
-        if (e.ctrlKey && e.shiftKey && e.key === "L") {
-            // Test timeline animations
-            timelineAnimation.triggerAllAnimations();
-            console.log("Timeline animations triggered for testing");
-        }
-
-        if (e.ctrlKey && e.shiftKey && e.key === "R") {
-            // Reset timeline animations
-            timelineAnimation.resetAnimations();
-            console.log("Timeline animations reset");
-        }
-
-        // Removed image loading statistics shortcut as it's no longer needed
-
-        if (e.ctrlKey && e.shiftKey && e.key === "F") {
-            // Refresh failed images
-            timelineImages.refreshImages();
-            console.log("Refreshing failed images");
-        }
     });
 });
 
@@ -979,7 +935,6 @@ class TimelineAnimationController {
 
     init() {
         if (this.timelineItems.length === 0) {
-            console.warn("No timeline items found");
             return;
         }
 
@@ -1076,40 +1031,6 @@ class TimelineAnimationController {
         setTimeout(() => {
             card.classList.remove("card-entrance");
         }, 800);
-    }
-
-    /**
-     * Reset all animations (useful for testing or re-triggering)
-     */
-    resetAnimations() {
-        this.animatedItems.clear();
-
-        this.timelineItems.forEach((item) => {
-            item.classList.remove("animate");
-            item.style.opacity = "0";
-            item.style.transform = "translateY(30px)";
-
-            const card = item.querySelector(".timeline-card");
-            if (card) {
-                card.classList.remove("card-entrance");
-            }
-
-            const icon = item.querySelector(".timeline-icon");
-            if (icon) {
-                icon.style.animation = "";
-            }
-        });
-    }
-
-    /**
-     * Trigger all animations immediately (for testing)
-     */
-    triggerAllAnimations() {
-        this.timelineItems.forEach((item, index) => {
-            setTimeout(() => {
-                this.animateTimelineItem(item);
-            }, index * 200);
-        });
     }
 
     /**
@@ -1446,8 +1367,6 @@ class TimelineImageController {
         const placeholder = this.createImagePlaceholder(img);
         img.parentNode.insertBefore(placeholder, img);
         img.style.display = "none";
-
-        console.warn(`Failed to load timeline image: ${img.src}`);
     }
 
     /**
@@ -1559,8 +1478,7 @@ class TimelineImageController {
         // Optional: Open image in modal or lightbox
         // this.openImageModal(img);
 
-        // For now, just log the interaction
-        console.log("Timeline image clicked:", img.alt);
+        // Handle image click interaction
     }
 
     /**

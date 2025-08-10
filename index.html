@@ -45,7 +45,7 @@
         />
 
         <!-- Main Stylesheet -->
-        <link rel="stylesheet" href="css/styles.css" />
+        <link rel="stylesheet" href="css/styles.css?v=2" />
 
         <title>Undangan Pernikahan Digital - Tema Tradisional Jawa</title>
     </head>
@@ -829,14 +829,109 @@
                                 data-aos="fade-up"
                             >
                                 <a
-                                    href="assets/images/gallery/photo1.jpg"
+                                    href="assets/images/gallery/photo1.svg"
                                     class="glightbox photo-card"
                                     data-gallery="wedding-gallery"
                                 >
                                     <img
                                         class="gallery-image"
-                                        src="assets/images/gallery/photo1.jpg"
-                                        alt="Foto Pernikahan"
+                                        src="assets/images/gallery/photo1.svg"
+                                        alt="Foto Pernikahan 1 - Momen bahagia pengantin"
+                                        loading="lazy"
+                                    />
+                                </a>
+                            </div>
+                            <div
+                                class="gallery-item"
+                                role="listitem"
+                                data-aos="fade-up"
+                                data-aos-delay="100"
+                            >
+                                <a
+                                    href="assets/images/gallery/photo2.svg"
+                                    class="glightbox photo-card"
+                                    data-gallery="wedding-gallery"
+                                >
+                                    <img
+                                        class="gallery-image"
+                                        src="assets/images/gallery/photo2.svg"
+                                        alt="Foto Pernikahan 2 - Prosesi akad nikah"
+                                        loading="lazy"
+                                    />
+                                </a>
+                            </div>
+                            <div
+                                class="gallery-item"
+                                role="listitem"
+                                data-aos="fade-up"
+                                data-aos-delay="200"
+                            >
+                                <a
+                                    href="assets/images/gallery/photo3.svg"
+                                    class="glightbox photo-card"
+                                    data-gallery="wedding-gallery"
+                                >
+                                    <img
+                                        class="gallery-image"
+                                        src="assets/images/gallery/photo3.svg"
+                                        alt="Foto Pernikahan 3 - Sesi foto bersama keluarga"
+                                        loading="lazy"
+                                    />
+                                </a>
+                            </div>
+                            <div
+                                class="gallery-item"
+                                role="listitem"
+                                data-aos="fade-up"
+                                data-aos-delay="300"
+                            >
+                                <a
+                                    href="assets/images/gallery/photo4.svg"
+                                    class="glightbox photo-card"
+                                    data-gallery="wedding-gallery"
+                                >
+                                    <img
+                                        class="gallery-image"
+                                        src="assets/images/gallery/photo4.svg"
+                                        alt="Foto Pernikahan 4 - Resepsi pernikahan"
+                                        loading="lazy"
+                                    />
+                                </a>
+                            </div>
+                            <div
+                                class="gallery-item"
+                                role="listitem"
+                                data-aos="fade-up"
+                                data-aos-delay="400"
+                            >
+                                <a
+                                    href="assets/images/gallery/photo5.svg"
+                                    class="glightbox photo-card"
+                                    data-gallery="wedding-gallery"
+                                >
+                                    <img
+                                        class="gallery-image"
+                                        src="assets/images/gallery/photo5.svg"
+                                        alt="Foto Pernikahan 5 - Tradisi Jawa dalam pernikahan"
+                                        loading="lazy"
+                                    />
+                                </a>
+                            </div>
+                            <div
+                                class="gallery-item"
+                                role="listitem"
+                                data-aos="fade-up"
+                                data-aos-delay="500"
+                            >
+                                <a
+                                    href="assets/images/gallery/photo6.svg"
+                                    class="glightbox photo-card"
+                                    data-gallery="wedding-gallery"
+                                >
+                                    <img
+                                        class="gallery-image"
+                                        src="assets/images/gallery/photo6.svg"
+                                        alt="Foto Pernikahan 6 - Momen romantis pengantin"
                                         loading="lazy"
                                     />
                                 </a>
@@ -889,6 +984,12 @@
             <!-- Audio controls will be implemented in later tasks -->
         </div>
 
+        <!-- AOS (Animate On Scroll) CSS -->
+        <link
+            href="https://unpkg.com/aos@2.3.1/dist/aos.css"
+            rel="stylesheet"
+        />
+
         <!-- GLightbox CSS and JS -->
         <link
             rel="stylesheet"
@@ -899,5 +1000,16 @@
         <script src="js/main.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
         <script src="js/gallery-simple.js"></script>
+
+        <!-- AOS (Animate On Scroll) JS -->
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script>
+            AOS.init({
+                duration: 800,
+                easing: "ease-in-out",
+                once: true,
+                offset: 100,
+            });
+        </script>
     </body>
 </html>
